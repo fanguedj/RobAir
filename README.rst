@@ -1,22 +1,22 @@
-===============================
+======================
 This package provides a control
 of the RobAIR by the keyboard
-===============================
+=======================
+<br/><br/>
 
-
-In a terminal, run "make".
+In a terminal, run "make".<br/>
 Make sure script files are executable
+<br/><br/>
+ROSMaster<br/>
+=========<br/>
+    roscore<br/><br/>
 
-ROSMaster
-=========
-    roscore
+Keyboard node<br/>
+=============<br/>
+(in a new terminal)<br/>
+    rosrun robair_demo kb_control.py<br/><br/>
 
-Keyboard node
-=============
-(in a new terminal)
-    rosrun robair_demo kb_control.py
-
-Motors node
-===========
-(in a new terminal)
-    rosrun robair_demo robair_node.py
+Motors node<br/>
+===========<br/>
+(in a new terminal)<br/>
+    rosrun robair_demo robair_node.py<br/>
