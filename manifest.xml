@@ -1,0 +1,15 @@
+<package>
+  <description brief="robair_demo">
+
+     Demo of RobAIR
+
+  </description>
+  <author>Nicolas Afonso, Simon Planès</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://air.imag.fr/mediawiki/index.php/RobAIR2013-RICM4-Groupe2-Suivi</url>
+  <depend package="rospy"/>
+  <depend package="std_msgs"/>
+</package>
+
+
