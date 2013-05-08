@@ -9,11 +9,29 @@ import rospy
 
 from robair_demo.msg import Command
 
+# Available motor commands, from PDF document at
+# http://www.robotshop.com/eu/content/PDF/md49-documentation.pdf
+# TODO complete this and use it in the code below
+def enum(**enums):
+    return type('Enum', (), enums)
+Commands = enum(
+        SYNC="\0",
+        SET_MODE="\x34",
+        SET_SPEED_1="\x31")
+Modes = enum(
+        UNSIGNED_SEPARATE_SPEEDS=0,
+        SIGNED_SEPARATE_SPEEDS=1,
+        UNSIGNED_SPEED_TURN=2,
+        SIGNED_SPEED_TURN=3)
 
-class MotorCommandNode(object):
-    '''Robair robot node
-    This node subscribes to the topic /cmd and listens
-    the commands that are sent'''
+
+
+class MotionControlNode(object):
+    '''
+    Robair motion control node
+    This node subscribes to the topic /cmd and forwards
+    the commands that are sent
+    '''
     def __init__(self, serial_port, node_name="robair_motion_control"):
         self.node_name = node_name
         rospy.init_node(self.node_name)

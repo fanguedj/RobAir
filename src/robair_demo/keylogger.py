@@ -208,3 +208,5 @@ def log(done, callback, sleep_interval=.005):
         changed, modifiers, keys = fetch_keys()
         if changed:
             callback(time(), modifiers, keys)
+
+
