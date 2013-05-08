@@ -1,0 +1,38 @@
+RobAIR ROS nodes for autonomous moving in crowded museum
+========================================================
+
+This package provides several nodes used to enable the [RobAIR Configuration 2][http://air.imag.fr/mediawiki/index.php/RobAIR_2013_Configuration_2] machine to find its way through a map, while avoiding collision with surrounding people.
+
+Available nodes
+---------------
+
+Warning: work in progress.
+
+*   **ArduinoSensors**
+    This node reads data from the sensors that are connected to the Arduino One board. These include:
+    * 3 infrared proximity sensors, used to detect holes in the ground in front of the robot's wheels (typically a stairway). Data is boolean.
+    * 2 up to 8 ultrasound proximity sensors, used to detect obstacles around the robot. Data is a distance.
+    This node publishes data to two ROS topics, one for each kind of sensor.
+*   **MotionControl**
+    This node listens to the **/cmd** topic for high-level movement commands and forwards them to the motors. It is also responsible for "reflex behavior", which consists of stopping the motors in case of holes in the ground or if a person is too close to the robot. It does so by subscribing to the two previous topics.
+*   **Keyboard**
+    Enables simple motor commands using the keyboard.
+*   **AutoPilot**
+    Reads data from ultrasonic proximity sensors, Kinect, and SLAM nodes, plus a destination from a to-be-defined source in order to compute a path towards the destination, and feed the **/cmd** topic with the resulting directions.
+
+Node and topics names follow [recommendations from the RICM 5 team][http://air.imag.fr/mediawiki/index.php/RobAIR2013-RICM5-Suivi#Architecture_ROS_d.C3.A9taill.C3.A9e] when possible.
+
+Launching nodes
+---------------
+
+In a terminal, run "make".
+Make sure script files are executable
+
+ROSMaster:
+    roscore
+
+Keyboard node (in a new terminal):
+    rosrun robair_demo kb_control.py
+
+Motors node (in a new terminal):
+    rosrun robair_demo robair_node.py
