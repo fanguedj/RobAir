@@ -127,7 +127,7 @@ class MotionControlNode(object):
     		newOrder = order + 1
     	else:
     		newOrder = order - 1
-    	self.sendOrder(newOrder)
+    	self.send_order(newOrder)
 
     def move(self):
         direction = self.current_cmd.move
