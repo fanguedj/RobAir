@@ -122,6 +122,7 @@ class MotionControlNode(object):
         # order every second. This way, we ensure that the robot works
         # continuously while the system is running, and that it stops whenerver
         # there is a problem.
+        self.send_bytes(Commands.ENABLE_TIMEOUT)
         while not rospy.is_shutdown():
             self.move()
             # TODO use rospy.rate
