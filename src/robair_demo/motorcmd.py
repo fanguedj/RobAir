@@ -131,17 +131,13 @@ class MotionControlNode(object):
 
     def move(self):
         direction = self.current_cmd.move
-        if direction < 5 {
-        	if not self.potholes.hole and (not self.obstacles.front_obstacle or not self.obstacles.rear_obstacle) {
+        if direction < 5:
+        	if not self.potholes.hole and not self.obstacles.front_obstacle and not self.obstacles.rear_obstacle:
             	self.send_order(direction)
-        	}
-            else {
+            else:
             	self.send_order_backtrack(direction)
-            }
-        }
-        else {
+        else:
             self.stop_wheels()
-        }
 
     def main_loop(self):
         # We chose to leave the timeout enabled (i.e. the robot will stop if it
