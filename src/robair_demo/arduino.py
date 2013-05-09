@@ -21,22 +21,24 @@ class ArduinoSensorsNode(object):
     def __init__(self, serial_port, node_name="robair_arduino_sensors"):
         self.node_name = node_name
         rospy.init_node(self.node_name)
-        self.infrared_pub = rospy.Publisher('/sensor/infrared_potholes', std_msgs.msg.String)
+        self.infrared_pub = rospy.Publisher('/sensor/infrared_potholes',
+                                            InfraredPotholes)
+        # Number of bauds must match the Arduino sketch value
+        # in arduino_sketches/infrared_and_ultrasound.ino
         self.ser = serial.Serial(serial_port, 9600)
 
     def process_infrared_line(self, split_line):
-        hole = False;
+        hole = False
+        sensor_holes = []
         for sensor_value in split_line[1:self.INFRA_NB]:
-            sensor_hole = (sensor_value == "1")
-            hole = hole or sensor_hole
-
-        self.infra_pub
+            sensor_holes.append(sensor_value == "1")
+            hole = hole or sensor_holes[-1]
+        self.infrared_pub.publish(InfraredPotholes(hole, *sensor_holes)
 
     def main_loop(self):
         while not rospy.is_shutdown():
-            self.todo()
-            self.infrared_pub.publish(InfraredPotholes(false, false, false))
-            time.sleep(1)
+            # TODO Check it is the good way to do nothing
+            rospy.spin()
 
     def shutdown(self):
         self.ser.close()

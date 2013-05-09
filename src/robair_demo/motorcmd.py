@@ -2,12 +2,12 @@
 import roslib
 import time
 import serial
-
 roslib.load_manifest('robair_demo')
-
 import rospy
-
 from robair_demo.msg import Command
+from robair_demo.msg import InfraredPotholes
+
+# TODO for this node: add odometry
 
 # Available motor commands, from PDF document at
 # http://www.robotshop.com/eu/content/PDF/md49-documentation.pdf
@@ -63,12 +63,17 @@ class MotionControlNode(object):
         self.node_name = node_name
         rospy.init_node(self.node_name)
         rospy.Subscriber('/cmd', Command, self.new_cmd_callback)
-        self.current_cmd = Command(5)
+        rospy.Subscriber('/sensor/infrared_potholes', InfraredPotholes, self.new_potholes_callback)
         self.ser = serial.Serial(serial_port, 38400)
+        self.current_cmd = Command(5); # Invalid command
+        self.potholes = InfraredPotholes(hole=True);
 
     def new_cmd_callback(self, cmd):
         self.current_cmd = cmd
-        self.stop_wheels()
+        self.move()
+
+    def new_potholes_callback(self, potholes):
+        self.potholes = potholes
         self.move()
 
     def send_bytes(self, *bytes_to_send):
@@ -113,8 +118,10 @@ class MotionControlNode(object):
 
     def move(self):
         direction = self.current_cmd.move
-        if direction < 5:
+        if direction < 5 and not potholes.hole:
             self.send_order(direction)
+        else:
+            self.stop_wheels()
 
     def main_loop(self):
         # We chose to leave the timeout enabled (i.e. the robot will stop if it
