@@ -133,14 +133,14 @@ class MotionControlNode(object):
         direction = self.current_cmd.move
         if direction < 5:
             if not self.potholes.hole and not self.obstacles.front_obstacle and not self.obstacles.rear_obstacle:
-            	print "order normal"
+                print "order normal"
                 self.send_order(direction)
             else:
-            	print "reverse order"
+                print "reverse order"
                 self.stop_wheels()
             #    self.send_order_backtrack(direction)
         else:
-        	print "order incorrect"
+            print "order incorrect"
             self.stop_wheels()
 
     def main_loop(self):
