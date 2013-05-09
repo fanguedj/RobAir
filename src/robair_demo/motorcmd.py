@@ -74,6 +74,7 @@ class MotionControlNode(object):
 
     def new_potholes_callback(self, potholes):
         self.potholes = potholes
+        print potholes
         self.move()
 
     def send_bytes(self, *bytes_to_send):
@@ -97,6 +98,7 @@ class MotionControlNode(object):
         
     def send_order(self, order):
         '''send orders through serial port'''
+        print "pouet"
         self.set_mode(Modes.UNSIGNED_SPEED_TURN)
         if order == 0: # move forward
             print "forward"
@@ -118,7 +120,7 @@ class MotionControlNode(object):
 
     def move(self):
         direction = self.current_cmd.move
-        if direction < 5 and not potholes.hole:
+        if direction < 5 and not self.potholes.hole:
             self.send_order(direction)
         else:
             self.stop_wheels()

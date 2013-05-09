@@ -1,3 +1,7 @@
+# Fichiers générés par rosmake
+msg_gen/
+src/robair_demo/msg/
+
 #################
 ## Eclipse
 #################

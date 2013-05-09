@@ -25,23 +25,22 @@ class ArduinoSensorsNode(object):
                                             InfraredPotholes)
         # Number of bauds must match the Arduino sketch value
         # in arduino_sketches/infrared_and_ultrasound.ino
-        self.ser = serial.Serial(serial_port, 9600)
+        self.ser = serial.Serial(serial_port, 115200)
 
     def process_infrared_line(self, split_line):
         hole = False
         sensor_holes = []
-        for sensor_value in split_line[1:self.INFRA_NB]:
+        for sensor_value in split_line[1:self.INFRA_NB+1]:
             sensor_holes.append(sensor_value == "1")
             hole = hole or sensor_holes[-1]
         self.infrared_pub.publish(InfraredPotholes(hole, *sensor_holes))
 
     def main_loop(self):
         while not rospy.is_shutdown():
-            split_line = self.ser.readLine().split();
+            split_line = self.ser.readline().split();
             # TODO Add timeouts to readLine so that it does report inactivity if
             # it does not receive data
             if split_line[0] == "INFRA":
-                print split_line
                 self.process_infrared_line(split_line)
 
     def shutdown(self):
