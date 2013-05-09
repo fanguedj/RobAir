@@ -6,7 +6,6 @@ roslib.load_manifest('robair_demo')
 import rospy
 from robair_demo.msg import Command
 from robair_demo.msg import InfraredPotholes
-from robair_demo.msg import UltrasoundObstacles
 
 # TODO for this node: add odometry
 
@@ -136,6 +135,7 @@ class MotionControlNode(object):
             if not self.potholes.hole and not self.obstacles.front_obstacle and not self.obstacles.rear_obstacle:
                 self.send_order(direction)
             else:
+                self.stop_wheels()
                 self.send_order_backtrack(direction)
         else:
             self.stop_wheels()
