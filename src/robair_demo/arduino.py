@@ -37,26 +37,28 @@ class ArduinoSensorsNode(object):
             hole = hole or sensor_holes[-1]
         self.infrared_pub.publish(InfraredPotholes(hole, *sensor_holes))
 
+    def normalize_distance(self, dist):
+        '''Adapt the string distances from the Arduino to integers'''
+        try:
+            val = int(dist)
+            if dist == 0:
+                return 1000000 # 0 from arduino means no obstacle detected
+        except exceptions.ValueError:
+            pass
+
     def process_ultrasound_line(self, split_line):
         front_obstacle = False
+        rear_obstacle = False
         obstacles = []
         for dist in split_line[1:1+self.ULTRA_FRONT_NB]:
-            try:
-                val = int(dist)
-                obstacles.append(val)
-                front_obstacle = front_obstacle or (
-                    val <= self.OBSTACLE_STOP_DIST)
-            except exceptions.ValueError:
-                pass
-        rear_obstacle = False
-        for dist in split_line[1:1+self.ULTRA_REAR_NB]:
-            try:
-                val = int(dist)
-                obstacles.append(val)
-                rear_obstacle = rear_obstacle or (
-                    val <= self.OBSTACLE_STOP_DIST)
-            except exceptions.ValueError:
-                pass
+            obstacles.append(self.normalize_distance(dist))
+            front_obstacle = front_obstacle or (
+                obstacles[-1] <= self.OBSTACLE_STOP_DIST)
+        for dist in split_line[1+self.ULTRA_FRONT_NB+1:
+                               1+self.ULTRA_FRONT_NB+1+self.ULTRA_REAR_NB]:
+            obstacles.append(self.normalize_distance(dist))
+            rear_obstacle = rear_obstacle or (
+                obstacles[-1] <= self.OBSTACLE_STOP_DIST)
         self.ultrasound_pub.publish(
             UltrasoundObstacles(front_obstacle, rear_obstacle, *obstacles))
 
