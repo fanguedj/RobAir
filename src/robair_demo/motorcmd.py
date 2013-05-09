@@ -64,6 +64,7 @@ class MotionControlNode(object):
         rospy.init_node(self.node_name)
         rospy.Subscriber('/cmd', Command, self.new_cmd_callback)
         rospy.Subscriber('/sensor/infrared_potholes', InfraredPotholes, self.new_potholes_callback)
+        rospy.Subscriber('/sensor/ultrasound_obstacles', UltrasoundObstacles, self.new_obstacles_callback)
         self.ser = serial.Serial(serial_port, 38400)
         self.current_cmd = Command(5); # Invalid command
         self.potholes = InfraredPotholes(hole=True);
@@ -74,7 +75,10 @@ class MotionControlNode(object):
 
     def new_potholes_callback(self, potholes):
         self.potholes = potholes
-        print potholes
+        self.move()
+        
+    def new_obstacles_callback(self, obstacles):
+        self.obstacles = obstacles
         self.move()
 
     def send_bytes(self, *bytes_to_send):
@@ -98,7 +102,6 @@ class MotionControlNode(object):
         
     def send_order(self, order):
         '''send orders through serial port'''
-        print "pouet"
         self.set_mode(Modes.UNSIGNED_SPEED_TURN)
         if order == 0: # move forward
             print "forward"
@@ -117,11 +120,22 @@ class MotionControlNode(object):
         elif order == 4: # stop wheels
             print "stop"
             self.stop_wheels()
+            
+    def send_order_backtrack(self, order):
+        '''send backtrack orders(reverse order) through serial port'''
+    	if order % 2: 
+    		newOrder = order + 1
+    	else:
+    		newOrder = order - 1
+    	self.sendOrder(newOrder)
 
     def move(self):
         direction = self.current_cmd.move
-        if direction < 5 and not self.potholes.hole:
-            self.send_order(direction)
+        if direction < 5:
+        	if not self.potholes.hole and (not self.obstacles.front_obstacle or not self.obstacles.rear_obstacle):
+            	self.send_order(direction)
+            else:
+            	self.send_order_backtrack(direction)
         else:
             self.stop_wheels()
 
