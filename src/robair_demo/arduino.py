@@ -41,10 +41,12 @@ class ArduinoSensorsNode(object):
         '''Adapt the string distances from the Arduino to integers'''
         try:
             val = int(dist)
-            if dist == 0:
+            if val == 0:
                 return 1000000 # 0 from arduino means no obstacle detected
+            else:
+                return val
         except exceptions.ValueError:
-            pass
+            return 0
 
     def process_ultrasound_line(self, split_line):
         front_obstacle = False
