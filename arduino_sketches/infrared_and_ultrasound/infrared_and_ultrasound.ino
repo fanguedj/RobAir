@@ -63,7 +63,7 @@ NewPing sonar[SONAR_NUM] = {     // Ultrasonic Sensor object array. Each sensor'
 int infraredRead(int pin) {
     int sensorValue = analogRead(pin);
     // The read value should be 0 or 1023 (binary)
-    if (sensorValue >= 512) {
+    if (sensorValue < 512) {
         // The ground is close, i.e. no hole
         return 0;
     } else {
