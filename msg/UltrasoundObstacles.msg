@@ -4,7 +4,7 @@ bool rear_obstacle
 # Distance of obstacles in centimeters
 # Order of sensors must match the Arduino sketch
 # North = front
-int north_west
-int north_left
-int north_right
-int north_east
+uint32 north_west
+uint32 north_left
+uint32 north_right
+uint32 north_east

@@ -6,6 +6,7 @@ roslib.load_manifest('robair_demo')
 import rospy
 from robair_demo.msg import Command
 from robair_demo.msg import InfraredPotholes
+from robair_demo.msg import UltrasoundObstacles
 
 # TODO for this node: add odometry
 
