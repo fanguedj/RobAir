@@ -11,20 +11,47 @@ from robair_demo.msg import Command
 
 # Available motor commands, from PDF document at
 # http://www.robotshop.com/eu/content/PDF/md49-documentation.pdf
-# TODO complete this and use it in the code below
 def enum(**enums):
     return type('Enum', (), enums)
 Commands = enum(
-        SYNC="\0",
-        SET_MODE="\x34",
-        SET_SPEED_1="\x31")
+    SYNC="\x00",
+    GET_SPEED_1="\x21",
+    GET_SPEED_2="\x22",
+    GET_ENCODER_1="\x23",
+    GET_ENCODER_2="\x24",
+    GET_ENCODERS="\x25",
+    GET_VOLTS="\x26",
+    GET_CURRENT_1="\x27",
+    GET_CURRENT_2="\x28",
+    GET_VERSION="\x29",
+    GET_ACCELERATION="\x2A",
+    GET_MODE="\x2B",
+    GET_VI="\x2C",
+    GET_ERROR="\x2D",
+    SET_SPEED_1_OR_BOTH="\x31",
+    SET_SPEED_2_OR_TURN="\x32",
+    SET_ACCELERATION="\x33",
+    SET_MODE="\x34",
+    RESET_ENCODERS="\x35",
+    DISABLE_REGULATOR="\x36",
+    ENABLE_REGULATOR="\x37",
+    DISABLE_TIMEOUT="\x38",
+    ENABLE_TIMEOUT="\x39");
 Modes = enum(
-        UNSIGNED_SEPARATE_SPEEDS=0,
-        SIGNED_SEPARATE_SPEEDS=1,
-        UNSIGNED_SPEED_TURN=2,
-        SIGNED_SPEED_TURN=3)
-
-
+    UNSIGNED_SEPARATE_SPEEDS=0,
+    SIGNED_SEPARATE_SPEEDS=1,
+    UNSIGNED_SPEED_TURN=2,
+    SIGNED_SPEED_TURN=3)
+# Speeds for use with UNSIGNED modes
+Speeds = enum(
+    FORWARD_MEDIUM="\x64",
+    NONE="\x80",
+    TURNING="\x78",
+    BACKWARD_MEDIUM="\x9b");
+Turns = enum(
+    LEFT = "\x87",
+    RIGHT = "\x79");
+    
 
 class MotionControlNode(object):
     '''
@@ -41,84 +68,48 @@ class MotionControlNode(object):
 
     def new_cmd_callback(self, cmd):
         self.current_cmd = cmd
+        self.stop_wheels()
+        self.move()
+
+    def send_bytes(self, *bytes_to_send):
+        '''Sends the given bytes, preceded by a synchronisation.'''
+        self.ser.write(Commands.SYNC);
+        for b in bytes_to_send:
+            self.ser.write(b)
 
     def set_mode(self, mode):
         '''set the mode of the MD49'''
-        if mode == 0:
-            self.ser.write("\x00")
-            self.ser.write("\x34")
-            self.ser.write("\x00")
-        elif mode == 1:
-            self.ser.write("\x00")
-            self.ser.write("\x34")
-            self.ser.write("\x01")
-        elif mode == 2:
-            self.ser.write("\x00")
-            self.ser.write("\x34")
-            self.ser.write("\x02")
-        elif mode == 3:
-            self.ser.write("\x00")
-            self.ser.write("\x34")
-            self.ser.write("\x03")
+        self.send_bytes(Commands.SET_MODE, mode)
 
     def stop_wheels(self):
         '''stop both motors'''
-        self.set_mode(2)
-        self.ser.write("\x00")
-        self.ser.write("\x31")
-        self.ser.write("\x80")
-        self.set_mode(0)
-        self.ser.write("\x00")
-        self.ser.write("\x31")
-        self.ser.write("\x80")
-        self.ser.write("\x00")
-        self.ser.write("\x32")
-        self.ser.write("\x80")
+        self.set_mode(Modes.UNSIGNED_SPEED_TURN)
+        self.send_bytes(Commands.SET_SPEED_1_OR_BOTH, Speeds.NONE)
+        # TODO Test whether the last 3 lines are useful
+        self.set_mode(Modes.UNSIGNED_SEPARATE_SPEEDS)
+        self.send_bytes(Commands.SET_SPEED_1_OR_BOTH, Speeds.NONE)
+        self.send_bytes(Commands.SET_SPEED_2_OR_TURN, Speeds.NONE)
         
     def send_order(self, order):
         '''send orders through serial port'''
+        self.set_mode(Modes.UNSIGNED_SPEED_TURN)
         if order == 0: # move forward
             print "forward"
-            self.stop_wheels()
-            self.set_mode(2)
-            self.ser.write("\x00")
-            self.ser.write("\x31")
-            self.ser.write("\x64") # medium speed
-            self.current_cmd.move = 5
+            self.send_bytes(Commands.SET_SPEED_1_OR_BOTH, Speeds.FORWARD_MEDIUM)
         elif order == 1: # move backward
             print "backward"
-            self.stop_wheels()
-            self.set_mode(2)
-            self.ser.write("\x00")
-            self.ser.write("\x31")
-            self.ser.write("\x9b")
-            self.current_cmd.move = 5
+            self.send_bytes(Commands.SET_SPEED_1_OR_BOTH, Speeds.BACKWARD_MEDIUM)
         elif order == 2: # turn left
             print "left"
-            self.stop_wheels()
-            self.set_mode(2)
-            self.ser.write("\x00")
-            self.ser.write("\x31")
-            self.ser.write("\x78")
-            self.ser.write("\x00")
-            self.ser.write("\x32")
-            self.ser.write("\x87")
-            self.current_cmd.move = 5
+            self.send_bytes(Commands.SET_SPEED_1_OR_BOTH, Speeds.TURNING)
+            self.send_bytes(Commands.SET_SPEED_2_OR_TURN, Turns.LEFT)
         elif order == 3: # turn right
             print "right"
-            self.stop_wheels()
-            self.set_mode(2)
-            self.ser.write("\x00")
-            self.ser.write("\x31")
-            self.ser.write("\x78")
-            self.ser.write("\x00")
-            self.ser.write("\x32")
-            self.ser.write("\x79")
-            self.current_cmd.move = 5
+            self.send_bytes(Commands.SET_SPEED_1_OR_BOTH, Speeds.TURNING)
+            self.send_bytes(Commands.SET_SPEED_2_OR_TURN, Turns.RIGHT)
         elif order == 4: # stop wheels
             print "stop"
             self.stop_wheels()
-            self.current_cmd.move = 5
 
     def move(self):
         direction = self.current_cmd.move
@@ -126,10 +117,14 @@ class MotionControlNode(object):
             self.send_order(direction)
 
     def main_loop(self):
-        self.ser.write("\x00")
-        self.ser.write("\x38") # disable timeout
+        # We chose to leave the timeout enabled (i.e. the robot will stop if it
+        # does not receive orders every two seconds), and to repeat the current
+        # order every second. This way, we ensure that the robot works
+        # continuously while the system is running, and that it stops whenerver
+        # there is a problem.
         while not rospy.is_shutdown():
             self.move()
+            # TODO use rospy.rate
             time.sleep(1)
 
     def shutdown(self):
