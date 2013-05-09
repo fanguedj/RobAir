@@ -79,6 +79,7 @@ class MotionControlNode(object):
         
     def new_obstacles_callback(self, obstacles):
         self.obstacles = obstacles
+        print obstacles
         self.move()
 
     def send_bytes(self, *bytes_to_send):
@@ -102,6 +103,7 @@ class MotionControlNode(object):
         
     def send_order(self, order):
         '''send orders through serial port'''
+        self.stop_wheels() # Cancel previous commands
         self.set_mode(Modes.UNSIGNED_SPEED_TURN)
         if order == 0: # move forward
             print "forward"
@@ -119,7 +121,6 @@ class MotionControlNode(object):
             self.send_bytes(Commands.SET_SPEED_2_OR_TURN, Turns.RIGHT)
         elif order == 4: # stop wheels
             print "stop"
-            self.stop_wheels()
             
     def send_order_backtrack(self, order):
         '''send backtrack orders(reverse order) through serial port'''
