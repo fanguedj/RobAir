@@ -6,7 +6,6 @@ roslib.load_manifest('robair_demo')
 import rospy
 from robair_demo.msg import Command
 from robair_demo.msg import InfraredPotholes
-from robair_demo.msg import UltrasoundObstacles
 
 # TODO for this node: add odometry
 
@@ -129,16 +128,20 @@ class MotionControlNode(object):
     		newOrder = order + 1
     	else:
     		newOrder = order - 1
-    	self.sendOrder(newOrder)
+    	self.send_order(newOrder)
 
     def move(self):
         direction = self.current_cmd.move
         if direction < 5:
             if not self.potholes.hole and not self.obstacles.front_obstacle and not self.obstacles.rear_obstacle:
+            	print "order normal"
                 self.send_order(direction)
             else:
-                self.send_order_backtrack(direction)
+            	print "reverse order"
+                self.stop_wheels()
+            #    self.send_order_backtrack(direction)
         else:
+        	print "order incorrect"
             self.stop_wheels()
 
     def main_loop(self):
