@@ -33,12 +33,16 @@ class ArduinoSensorsNode(object):
         for sensor_value in split_line[1:self.INFRA_NB]:
             sensor_holes.append(sensor_value == "1")
             hole = hole or sensor_holes[-1]
-        self.infrared_pub.publish(InfraredPotholes(hole, *sensor_holes)
+        self.infrared_pub.publish(InfraredPotholes(hole, *sensor_holes))
 
     def main_loop(self):
         while not rospy.is_shutdown():
-            # TODO Check it is the good way to do nothing
-            rospy.spin()
+            split_line = self.ser.readLine().split();
+            # TODO Add timeouts to readLine so that it does report inactivity if
+            # it does not receive data
+            if split_line[0] == "INFRA":
+                print split_line
+                self.process_infrared_line(split_line)
 
     def shutdown(self):
         self.ser.close()
