@@ -12,9 +12,10 @@ Warning: work in progress.
     
     This node reads data from the sensors that are connected to the Arduino One board. These include:
     * 3 infrared proximity sensors, used to detect holes in the ground in front of the robot's wheels (typically a stairway). Data is boolean.
-    * 2 up to 8 ultrasound proximity sensors, used to detect obstacles around the robot. Data is a distance.    
+    * 4 up to 8 ultrasound proximity sensors, used to detect obstacles around the robot. Data is a distance expressed in centimeters.
     
-    This node publishes data to two ROS topics, one for each kind of sensor.
+    This node publishes data to two ROS topics, one for each kind of sensor: **/sensor/infrared_potholes**
+    and **/sensor/ultrasound_obstacles**
 
 *   **MotionControl**
     
@@ -30,20 +31,28 @@ Warning: work in progress.
 
 Node and topics names follow [recommendations from the RICM 5 team](http://air.imag.fr/mediawiki/index.php/RobAIR2013-RICM5-Suivi#Architecture_ROS_d.C3.A9taill.C3.A9e) when possible.
 
+TODO
+----
+
+* Actually implement the AutoPilot node. Algorithms have already been discussed on
+  [the project's wiki](http://fablab.ensimag.fr/index.php/RobAIR/Pilotage_Automatique/Algorithmes).
+* Make use of the skeleton tracking nodes in the above algortihms, and integrate them in the current framework.
+* Integrate the SLAM nodes from the other Ensimag team.
+
+
 Launching nodes
 ---------------
 
-In a terminal, run "make".
-Make sure script files are executable
+In a terminal, run `make`.
+Make sure script files are executable with `chmod +x scripts`
 
-ROSMaster:
+You can use the `./toutLancer.sh` script to automatically open one gnome-terminal per
+command and run all provided nodes.
 
-    roscore
+Alternatively, you can launch individual nodes as folows.
 
-Keyboard node (in a new terminal):
-
-    rosrun robair_demo kb_control.py
-
-Motors node (in a new terminal):
-
-    rosrun robair_demo robair_node.py
+* ROSMaster: `roscore`
+* Keyboard node (in a new terminal): `rosrun robair_demo kb_control.py`
+* Motors node (in a new terminal): `rosrun robair_demo motion_control_node.py`
+* Arduino sensors data (in a new terminal): `rosrun robair_demo arduino_sensors.py`
+    
