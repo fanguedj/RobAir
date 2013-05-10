@@ -8,8 +8,7 @@ Available nodes
 
 Warning: work in progress.
 
-*   **ArduinoSensors**
-    
+*   **ArduinoSensors**    
     This node reads data from the sensors that are connected to the Arduino One board. These include:
     * 3 infrared proximity sensors, used to detect holes in the ground in front of the robot's wheels (typically a stairway). Data is boolean.
     * 4 up to 8 ultrasound proximity sensors, used to detect obstacles around the robot. Data is a distance expressed in centimeters.
@@ -17,16 +16,18 @@ Warning: work in progress.
     This node publishes data to two ROS topics, one for each kind of sensor: **/sensor/infrared_potholes**
     and **/sensor/ultrasound_obstacles**
 
-*   **MotionControl**
-    
-    This node listens to the **/cmd** topic for high-level movement commands and forwards them to the motors. It is also responsible for "reflex behavior", which consists of stopping the motors in case of holes in the ground or if a person is too close to the robot. It does so by subscribing to the two previous topics.
+*   **MotionControl**      
+    This node listens to the **/cmd** topic for movement commands
+    (as "move 1 meter forward" or "turn 25' left"), turns them into hardware-level instructions
+    and forwards them to the motors.
+    It is also responsible for "reflex behavior", which consists of stopping
+    the motors in case of holes in the ground or if a person is too close to the robot.
+    It does so by subscribing to the two previous topics.
 
-*   **Keyboard**
-    
+*   **Keyboard**    
     Enables simple motor commands using the keyboard.
     
-*   **AutoPilot**
-    
+*   **AutoPilot**    
     Reads data from ultrasonic proximity sensors, Kinect, and SLAM nodes, plus a destination from a to-be-defined source in order to compute a path towards the destination, and feed the **/cmd** topic with the resulting directions.
 
 Node and topics names follow [recommendations from the RICM 5 team](http://air.imag.fr/mediawiki/index.php/RobAIR2013-RICM5-Suivi#Architecture_ROS_d.C3.A9taill.C3.A9e) when possible.
@@ -34,23 +35,27 @@ Node and topics names follow [recommendations from the RICM 5 team](http://air.i
 TODO
 ----
 
+* Modify the `Command` message type to be higher-level and document it.
+* Modify the MotionControlNode to allow for more flexible movement commands (together with above point).
 * Actually implement the AutoPilot node. Algorithms have already been discussed on
   [the project's wiki](http://fablab.ensimag.fr/index.php/RobAIR/Pilotage_Automatique/Algorithmes).
 * Make use of the skeleton tracking nodes in the above algortihms, and integrate them in the current framework.
 * Integrate the SLAM nodes from the other Ensimag team.
+* Look into [the RICM5 team source code](https://github.com/SalemHarrache/robair-ros-pkg)
+  for reusable parts and for integration with their remote control architecture.
+  They might indeed provide a node that sends high-level commands to the AutoPilot node
+  (high-level as in "go to room 25" or "let me see the Joconde")
 
 
 Launching nodes
 ---------------
 
 In a terminal, run `make`.
-Make sure script files are executable with `chmod +x scripts`
-
-You can use the `./toutLancer.sh` script to automatically open one gnome-terminal per
+Make sure script files are executable with `chmod +x scripts`. 
+You can then use the `./toutLancer.sh` script to automatically open one gnome-terminal per
 command and run all provided nodes.
 
-Alternatively, you can launch individual nodes as folows.
-
+Alternatively, you can launch individual nodes as follows.     
 * ROSMaster: `roscore`
 * Keyboard node (in a new terminal): `rosrun robair_demo kb_control.py`
 * Motors node (in a new terminal): `rosrun robair_demo motion_control_node.py`
