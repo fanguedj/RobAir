@@ -157,6 +157,7 @@ class MotionControlNode(object):
         if self.obstacles.north_right < mini :
             mini = self.obstacles.north_right
 
+        print "mini=", mini
         #speed reduction field
         if mini < REDUCE_SPEED_DISTANCE:
             print "reduction vitesse !"
