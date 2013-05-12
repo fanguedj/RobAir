@@ -166,9 +166,8 @@ class MotionControlNode(object):
             #add normal speed value
             distModif += 64
             #merge strings
-            chaine = "\x" + str(distModif)
+            chaine = r"\x" + str(distModif)
             return chaine
-
         else:
             return Speeds.FORWARD_MEDIUM
 
