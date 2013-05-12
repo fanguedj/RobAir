@@ -46,6 +46,7 @@ Modes = enum(
 # Speeds for use with UNSIGNED modes
 Speeds = enum(
     FORWARD_MEDIUM="\x64",
+    FORWARD_MAX="\x00",
     NONE="\x80",
     TURNING="\x78",
     BACKWARD_MEDIUM="\x9b");
@@ -108,7 +109,7 @@ class MotionControlNode(object):
         self.set_mode(Modes.UNSIGNED_SPEED_TURN)
         if order == 0: # move forward
             print "forward"
-            self.send_bytes(Commands.SET_SPEED_1_OR_BOTH, Speeds.FORWARD_MEDIUM)
+            self.send_bytes(Commands.SET_SPEED_1_OR_BOTH, Speeds.FORWARD_MAX)
         elif order == 1: # move backward
             print "backward"
             self.send_bytes(Commands.SET_SPEED_1_OR_BOTH, Speeds.BACKWARD_MEDIUM)
