@@ -159,6 +159,7 @@ class MotionControlNode(object):
 
         #speed reduction field
         if mini < REDUCE_SPEED_DISTANCE:
+            print "reduction vitesse !"
             #compute to have a value between 0..15
             distModif = mini / 7
             #reverse value
