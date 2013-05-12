@@ -9,6 +9,8 @@ from robair_demo.msg import InfraredPotholes
 from robair_demo.msg import UltrasoundObstacles
 
 # TODO for this node: add odometry
+#beyond this limit, the speed is maximum
+REDUCE_SPEED_DISTANCE = 100;
 
 # Available motor commands, from PDF document at
 # http://www.robotshop.com/eu/content/PDF/md49-documentation.pdf
@@ -46,7 +48,6 @@ Modes = enum(
 # Speeds for use with UNSIGNED modes
 Speeds = enum(
     FORWARD_MEDIUM="\x64",
-    FORWARD_MAX="\x00",
     NONE="\x80",
     TURNING="\x78",
     BACKWARD_MEDIUM="\x9b");
@@ -109,7 +110,7 @@ class MotionControlNode(object):
         self.set_mode(Modes.UNSIGNED_SPEED_TURN)
         if order == 0: # move forward
             print "forward"
-            self.send_bytes(Commands.SET_SPEED_1_OR_BOTH, Speeds.FORWARD_MAX)
+            self.send_bytes(Commands.SET_SPEED_1_OR_BOTH, self.computeSpeed())
         elif order == 1: # move backward
             print "backward"
             self.send_bytes(Commands.SET_SPEED_1_OR_BOTH, Speeds.BACKWARD_MEDIUM)
@@ -145,6 +146,33 @@ class MotionControlNode(object):
         else:
             print "order incorrect"
             self.stop_wheels()
+
+    def computeSpeed(self):
+        #mini research
+        mini = self.obstacles.north_west
+        if self.obstacles.north_east < mini :
+            mini = self.obstacles.north_east
+        if self.obstacles.north_left < mini :
+            mini = self.obstacles.north_left
+        if self.obstacles.north_right < mini :
+            mini = self.obstacles.north_right
+
+        #speed reduction field
+        if mini < REDUCE_SPEED_DISTANCE:
+            chaine = "\x"
+            #compute to have a value between 0..15
+            distModif = mini / 7
+            #reverse value
+            distModif = 15 - distModif
+            #add normal speed value
+            distModif += 64
+            #merge strings
+            chaine += distModif
+            return chaine
+
+        else:
+            return Speeds.FORWARD_MEDIUM
+
 
     def main_loop(self):
         # We chose to leave the timeout enabled (i.e. the robot will stop if it
