@@ -159,7 +159,6 @@ class MotionControlNode(object):
 
         #speed reduction field
         if mini < REDUCE_SPEED_DISTANCE:
-            chaine = "\x"
             #compute to have a value between 0..15
             distModif = mini / 7
             #reverse value
@@ -167,7 +166,7 @@ class MotionControlNode(object):
             #add normal speed value
             distModif += 64
             #merge strings
-            chaine += distModif
+            chaine = "\x" + str(distModif)
             return chaine
 
         else:
