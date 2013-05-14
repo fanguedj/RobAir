@@ -52,8 +52,8 @@ Speeds = enum(
     TURNING="\x64",
     BACKWARD_MEDIUM="\x9b");
 Turns = enum(
-    LEFT = "\x87",
-    RIGHT = "\x79");
+    LEFT = "\x64",
+    RIGHT = "\x9C");
     
 
 class MotionControlNode(object):
@@ -116,11 +116,11 @@ class MotionControlNode(object):
             self.send_bytes(Commands.SET_SPEED_1_OR_BOTH, Speeds.BACKWARD_MEDIUM)
         elif order == 2: # turn left
             print "left"
-            self.send_bytes(Commands.SET_SPEED_1_OR_BOTH, Speeds.TURNING)
+            self.send_bytes(Commands.SET_SPEED_1_OR_BOTH, Speeds.NONE)
             self.send_bytes(Commands.SET_SPEED_2_OR_TURN, Turns.LEFT)
         elif order == 3: # turn right
             print "right"
-            self.send_bytes(Commands.SET_SPEED_1_OR_BOTH, Speeds.TURNING)
+            self.send_bytes(Commands.SET_SPEED_1_OR_BOTH, Speeds.NONE)
             self.send_bytes(Commands.SET_SPEED_2_OR_TURN, Turns.RIGHT)
         elif order == 4: # stop wheels
             print "stop"
