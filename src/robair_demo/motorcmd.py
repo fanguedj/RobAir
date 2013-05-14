@@ -162,14 +162,15 @@ class MotionControlNode(object):
         if mini < REDUCE_SPEED_DISTANCE:
             print "reduction vitesse !"
             #compute to have a value between 0..15
-            distModif = mini / 7
+            distModif = ( mini * 28 ) / 100
             #reverse value
-            distModif = 15 - distModif
+            distModif = 28 - distModif
             #add normal speed value
-            distModif += 64
+            distModif += 100
             #merge strings
-            chaine = r"\x" + str(distModif)
-            return chaine
+          #  chaine = r"\x" + str(distModif)
+           # print chaine
+            return unichr(distModif)
         else:
             return Speeds.FORWARD_MEDIUM
 
