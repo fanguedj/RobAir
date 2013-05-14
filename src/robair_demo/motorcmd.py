@@ -10,7 +10,7 @@ from robair_demo.msg import UltrasoundObstacles
 
 # TODO for this node: add odometry
 #beyond this limit, the speed is maximum
-REDUCE_SPEED_DISTANCE = 100;
+REDUCE_SPEED_DISTANCE = 30;
 DIRECTION_AUTORIZATION = 1111;
 
 # Available motor commands, from PDF document at
@@ -48,7 +48,7 @@ Modes = enum(
     SIGNED_SPEED_TURN="\x03")
 # Speeds for use with UNSIGNED modes
 Speeds = enum(
-    FORWARD_MEDIUM="\x64",
+    FORWARD_MEDIUM="\x50",
     NONE="\x80",
     TURNING="\x64",
     BACKWARD_MEDIUM="\x9b");
@@ -133,29 +133,29 @@ class MotionControlNode(object):
             
     def send_order_backtrack(self, order):
         '''send backtrack orders(reverse order) through serial port'''
-        self.stop_wheels()
-    	if order % 2: 
+#        self.stop_wheels()
+    	if order % 2 == 0: 
     		newOrder = order + 1
     	else:
     		newOrder = order - 1
-        while not isFrontSensorOK():
-    	    self.send_order(newOrder)
-
-    def isFrontSensorsOK(self):
+#        while not self.isFrontSensorsOK(15):
+    	self.send_order(newOrder)
+        self.stop_wheels() # Cancel previous commands
+    def isFrontSensorsOK(self, value):
         if not self.potholes.hole and (
-			        self.obstacles.north_west  >= 5 and
-			        self.obstacles.north_left  >= 5 and
-			        self.obstacles.north_right >= 5 and
-			        self.obstacles.north_east  >= 5):
-            return true
+			        self.obstacles.north_west  >= value and
+			        self.obstacles.north_left  >= value and
+			        self.obstacles.north_right >= value and
+			        self.obstacles.north_east  >= value):
+            return True
         else:
-            return false
+            return False
 
     def move(self):
         direction = self.current_cmd.move
         if direction < 5:
             if direction == 0:
-                if isFrontSensorsOK():
+                if self.isFrontSensorsOK(15):
                     print "order normal"
                     self.send_order(direction)
                 else:
