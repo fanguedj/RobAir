@@ -140,7 +140,7 @@ class MotionControlNode(object):
 			    self.obstacles.north_west  >= 5 and
 			    self.obstacles.north_left  >= 5 and
 			    self.obstacles.north_right >= 5 and
-			    self.obstacles.north_east  >= 5)
+			    self.obstacles.north_east  >= 5):
                 print "order normal"
                 self.send_order(direction)
             else:
