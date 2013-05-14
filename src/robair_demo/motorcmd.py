@@ -11,6 +11,7 @@ from robair_demo.msg import UltrasoundObstacles
 # TODO for this node: add odometry
 #beyond this limit, the speed is maximum
 REDUCE_SPEED_DISTANCE = 100;
+DIRECTION_AUTORIZATION = 1111;
 
 # Available motor commands, from PDF document at
 # http://www.robotshop.com/eu/content/PDF/md49-documentation.pdf
@@ -54,6 +55,11 @@ Speeds = enum(
 Turns = enum(
     LEFT = "\x64",
     RIGHT = "\x9C");
+AutorizedDirection = enum(
+    FORWARD = 1000,
+    BACKWARD = 100,
+    LEFT = 10,
+    RIGHT = 1);
     
 
 class MotionControlNode(object):
@@ -127,26 +133,36 @@ class MotionControlNode(object):
             
     def send_order_backtrack(self, order):
         '''send backtrack orders(reverse order) through serial port'''
+        self.stop_wheels()
     	if order % 2: 
     		newOrder = order + 1
     	else:
     		newOrder = order - 1
-    	self.send_order(newOrder)
+        while not isFrontSensorOK():
+    	    self.send_order(newOrder)
+
+    def isFrontSensorsOK(self):
+        if not self.potholes.hole and (
+			        self.obstacles.north_west  >= 5 and
+			        self.obstacles.north_left  >= 5 and
+			        self.obstacles.north_right >= 5 and
+			        self.obstacles.north_east  >= 5):
+            return true
+        else:
+            return false
 
     def move(self):
         direction = self.current_cmd.move
         if direction < 5:
-            if not self.potholes.hole and (
-			    self.obstacles.north_west  >= 5 and
-			    self.obstacles.north_left  >= 5 and
-			    self.obstacles.north_right >= 5 and
-			    self.obstacles.north_east  >= 5):
-                print "order normal"
-                self.send_order(direction)
+            if direction == 0:
+                if isFrontSensorsOK():
+                    print "order normal"
+                    self.send_order(direction)
+                else:
+                    print "reverse order"
+                    self.send_order_backtrack(direction)
             else:
-                print "reverse order"
-                self.stop_wheels()
-            #    self.send_order_backtrack(direction)
+                self.send_order(direction)
         else:
             print "order incorrect"
             self.stop_wheels()
