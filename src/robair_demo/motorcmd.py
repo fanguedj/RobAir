@@ -136,7 +136,11 @@ class MotionControlNode(object):
     def move(self):
         direction = self.current_cmd.move
         if direction < 5:
-            if not self.potholes.hole and not self.obstacles.front_obstacle and not self.obstacles.rear_obstacle:
+            if not self.potholes.hole and (
+			    self.obstacles.north_west  >= 5 and
+			    self.obstacles.north_left  >= 5 and
+			    self.obstacles.north_right >= 5 and
+			    self.obstacles.north_east  >= 5)
                 print "order normal"
                 self.send_order(direction)
             else:
