@@ -142,7 +142,7 @@ class MotionControlNode(object):
     	self.send_order(newOrder)
         self.stop_wheels() # Cancel previous commands
     def isFrontSensorsOK(self, value):
-        if not self.potholes.front_hole and (
+        if not self.potholes.hole and (
 			        self.obstacles.north_west  >= value and
 			        self.obstacles.north_left  >= value and
 			        self.obstacles.north_right >= value and
@@ -151,31 +151,14 @@ class MotionControlNode(object):
         else:
             return False
 
-    def isRearSensorsOK(self, value):
-        if not self.potholes.rear_hole and (
-			        self.obstacles.south_west  >= value and
-			        self.obstacles.south_left  >= value and
-			        self.obstacles.south_right >= value and
-			        self.obstacles.south_east  >= value):
-            return True
-        else:
-            return False
-
     def move(self):
         direction = self.current_cmd.move
         if direction < 5:
-            if direction == 0: #FWD
+            if direction == 0:
                 if self.isFrontSensorsOK(15):
                     print "order normal"
                     self.send_order(direction)
                 else:
-                    print "reverse order"
-                    self.send_order_backtrack(direction)
-            elif direction == 1: #backward
-                if self.isRearSensorsOK(15):
-                    print "order normal"
-                    self.send_order(direction)
-                else :
                     print "reverse order"
                     self.send_order_backtrack(direction)
             else:

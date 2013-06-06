@@ -13,10 +13,9 @@ class ArduinoSensorsNode(object):
     Infrared holes detection information goes to /sensor/infrared_potholes
     Ultrasound obstacles detection goes to /sensor/ultrasound_obstacles
     '''
-    INFRA_FRONT_NB = 2
-    INFRA_REAR_NB = 2
+    INFRA_NB = 3
     ULTRA_FRONT_NB = 4
-    ULTRA_REAR_NB = 4
+    ULTRA_REAR_NB = 0
     OBSTACLE_STOP_DIST = 20 # centimeters
 
     def __init__(self, serial_port, node_name="robair_arduino_sensors"):
@@ -31,17 +30,12 @@ class ArduinoSensorsNode(object):
         self.ser = serial.Serial(serial_port, 115200)
 
     def process_infrared_line(self, split_line):
-        front_hole = False
-        rear_hole = False
+        hole = False
         sensor_holes = []
-        for sensor_value in split_line[1:1+self.INFRA_FRONT_NB]:
+        for sensor_value in split_line[1:1+self.INFRA_NB]:
             sensor_holes.append(sensor_value == "1")
-            front_hole = front_hole or sensor_holes[-1]
-        for sensor_value in split_line[1+self.INFRA_FRONT_NB+1:1+self.INFRA_FRONT_NB+1+self.INFRA_REAR_NB]:
-            sensor_holes.append(sensor_value == "1")
-            rear_hole = rear_hole or sensor_holes[-1]
-
-        self.infrared_pub.publish(InfraredPotholes(front_hole,rear_hole, *sensor_holes))
+            hole = hole or sensor_holes[-1]
+        self.infrared_pub.publish(InfraredPotholes(hole, *sensor_holes))
 
     def normalize_distance(self, dist):
         '''Adapt the string distances from the Arduino to integers'''
