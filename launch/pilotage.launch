@@ -1,0 +1,7 @@
+<launch>
+
+  <node pkg="robair_demo" type="kb_control.py" name="kb_control"/>
+  <node pkg="robair_demo" type="motion_control_node.py" name="motion_control_node"/>
+  <node pkg="robair_demo" type="arduino_sensors.py" name="arduino_sensors"/>
+
+</launch>

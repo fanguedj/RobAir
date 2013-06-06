@@ -2,6 +2,8 @@
 msg_gen/
 src/robair_demo/msg/
 
+*~
+
 #################
 ## Eclipse
 #################
@@ -22,9 +24,6 @@ local.properties
 
 # External tool builders
 .externalToolBuilders/
-
-# Locally stored "Eclipse launch configurations"
-*.launch
 
 # CDT-specific
 .cproject
