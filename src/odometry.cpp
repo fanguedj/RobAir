@@ -33,7 +33,7 @@ void publish(ros::Publisher odom_pub, tf::TransformBroadcaster odom_broadcaster)
    geometry_msgs::TransformStamped odom_trans;
    odom_trans.header.stamp = currentTime;
    odom_trans.header.frame_id = "odom";
-   odom_trans.child_frame_id = "base_link";
+   odom_trans.child_frame_id = "base_frame";
 
    odom_trans.transform.translation.x = x;
    odom_trans.transform.translation.y = y;
