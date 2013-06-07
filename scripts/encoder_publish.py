@@ -32,7 +32,7 @@ def talker():
         print "roue gauche :" + str(wheel1)
         print "roue droite :" + str(wheel2)
         pub.publish(wheel2,wheel1)
-        rospy.sleep(1.0)
+        rospy.sleep(0.2)
 
 
 if __name__ == '__main__':

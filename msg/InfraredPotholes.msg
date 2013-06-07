@@ -6,3 +6,4 @@ bool hole
 bool left
 bool middle
 bool right
+bool rear_left

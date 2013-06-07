@@ -2,9 +2,9 @@
 
   <node pkg="hokuyo_node" type="hokuyo_node" name="hokuyo_node"/>
 
-  <node pkg="robair_demo" type="encoder_publish.py" name="encoder_publish"/>
+  <!--node pkg="robair_demo" type="encoder_publish.py" name="encoder_publish"/-->
 
-   <node pkg="robair_demo" type="odometry" name="odometry"/>
+   <!--node pkg="robair_demo" type="odometry" name="odometry"/-->
 
   <include file="$(find hector_mapping)/launch/mapping_default.launch">
     <arg name="base_frame" value="base_frame"/>
@@ -16,6 +16,8 @@
   </include>
 
   <node pkg="tf" type="static_transform_publisher" name="base_frame_to_laser_broadcaster" args="0 0 0 0 0 0 base_frame laser 100"/>
+
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_base_frame" args="0 0 0 0 0 0 base_link base_frame 100"/>
   
   <node pkg="rviz" type="rviz" name="rviz" 
     args="-d $(find hector_slam_launch)/rviz_cfg/mapping_demo.vcg"/>
