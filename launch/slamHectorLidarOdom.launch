@@ -2,9 +2,9 @@
 
   <node pkg="hokuyo_node" type="hokuyo_node" name="hokuyo_node"/>
 
-  <!--node pkg="robair_demo" type="encoder_publish.py" name="encoder_publish"/-->
+  <node pkg="robair_demo" type="encoder_publish.py" name="encoder_publish"/>
 
-   <!--node pkg="robair_demo" type="odometry" name="odometry"/-->
+   <node pkg="robair_demo" type="odometry" name="odometry"/>
 
   <include file="$(find hector_mapping)/launch/mapping_default.launch">
     <arg name="base_frame" value="base_frame"/>
