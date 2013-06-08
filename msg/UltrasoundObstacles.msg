@@ -8,3 +8,7 @@ uint32 north_west
 uint32 north_left
 uint32 north_right
 uint32 north_east
+uint32 south_west
+uint32 south_left
+uint32 south_right
+uint32 south_east

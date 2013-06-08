@@ -7,7 +7,7 @@ from robair_demo.arduino import ArduinoSensorsNode
 
 if __name__ == '__main__':
     # in the following line, put the right port as argument
-    robair_node = ArduinoSensorsNode('/dev/ttyACM0')
+    robair_node = ArduinoSensorsNode('/dev/ttyACM1')
     rospy.loginfo("%s running..." % robair_node.node_name)
     robair_node.main_loop()
     robair_node.shutdown()

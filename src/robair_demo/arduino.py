@@ -14,7 +14,7 @@ class ArduinoSensorsNode(object):
     Ultrasound obstacles detection goes to /sensor/ultrasound_obstacles
     '''
     INFRA_NB = 4
-    ULTRA_FRONT_NB = 4
+    ULTRA_FRONT_NB = 8
     ULTRA_REAR_NB = 0
     OBSTACLE_STOP_DIST = 20 # centimeters
 

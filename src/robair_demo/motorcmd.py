@@ -141,20 +141,25 @@ class MotionControlNode(object):
 #        while not self.isFrontSensorsOK(15):
     	self.send_order(newOrder)
         self.stop_wheels() # Cancel previous commands
+
     def isFrontSensorsOK(self, value):
         if not self.potholes.hole and (
 			        self.obstacles.north_west  >= value and
 			        self.obstacles.north_left  >= value and
 			        self.obstacles.north_right >= value and
 			        self.obstacles.north_east  >= value):
+            print "front Sensor is OK ++++++++++"
             return True
         else:
+	    print self.potholes.hole
+	    print value
+	    print "front sensos NOT OK ---------"
             return False
 
     def move(self):
         direction = self.current_cmd.move
         if direction < 5:
-            if direction == 0:
+            if direction == 0:  
                 if self.isFrontSensorsOK(15):
                     print "order normal"
                     self.send_order(direction)
@@ -176,7 +181,6 @@ class MotionControlNode(object):
             mini = self.obstacles.north_left
         if self.obstacles.north_right < mini :
             mini = self.obstacles.north_right
-
         print "mini=", mini
         #speed reduction field
         if mini < REDUCE_SPEED_DISTANCE:
