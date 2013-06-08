@@ -6,6 +6,14 @@
 
    <node pkg="robair_demo" type="odometry" name="odometry"/>
 
+
+  <nodse pkg="robair_demo" type="arduino_sensors.py" name="arduino_sensors"/>
+
+  <node pkg="robair_demo" type="motion_control_node.py" name="motion_control_node"/>
+
+  <node pkg="robair_demo" type="kb_control.py" name="kb_control"/>
+
+
   <include file="$(find hector_mapping)/launch/mapping_default.launch">
     <arg name="base_frame" value="base_frame"/>
     <arg name="odom_frame" value="odom"/>

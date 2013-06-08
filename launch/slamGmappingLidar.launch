@@ -1,14 +1,16 @@
 <launch>
 
-  <node pkg="hokuyo_node" type="hokuyo_node" name="hokuyo_node"/>
+  <!--node pkg="hokuyo_node" type="hokuyo_node" name="hokuyo_node"/-->
 
   <node pkg="robair_demo" type="encoder_publish.py" name="encoder_publish"/>
+
+  <!--node pkg="robair_demo" type="arduino_sensors.py" name="arduino_sensors"/-->
 
   <node pkg="robair_demo" type="motion_control_node.py" name="motion_control_node"/>
 
   <node pkg="robair_demo" type="kb_control.py" name="kb_control"/>
 
-  <node pkg="robair_demo" type="odometry" name="odometry"/>
+  <!--node pkg="robair_demo" type="odometry" name="odometry"/-->
 
   <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping">
     <param name="map_udpate_interval" value="1.0"/><!--def : 5.0 -->
@@ -28,7 +30,7 @@
     <param name="linearUpdate" value="1.0"/><!--1.0-->
     <param name="angularUpdate" value="0.5"/><!--0.5-->
     <param name="resampleThreshold" value="0.5"/>
-    <param name="particles" value="50"/><!--30-->
+    <param name="particles" value="30"/><!--30-->
     <param name="xmin" value="-50.0"/><!-- initial size map -->
     <param name="ymin" value="-50.0"/>
     <param name="xmax" value="50.0"/>

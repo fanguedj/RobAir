@@ -28,6 +28,7 @@ class ArduinoSensorsNode(object):
         # Number of bauds must match the Arduino sketch value
         # in arduino_sketches/infrared_and_ultrasound.ino
         self.ser = serial.Serial(serial_port, 115200)
+        rospy.sleep(2)
         self.ser.write('s')
         
 
