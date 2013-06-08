@@ -1,0 +1,13 @@
+<launch>
+
+  <node pkg="robair_demo" type="kb_control.py" name="kb_control"/>
+  <node pkg="robair_demo" type="motion_control_node.py" name="motion_control_node"/>
+
+  <node pkg="robair_demo" type="encoder_publish.py" name="encoder_publish"/>
+
+  <!--node pkg="robair_demo" type="odometry" name="odometry"/-->
+
+  <node pkg="rviz" type="rviz" name="rviz" 
+        args="-d $(find robair_demo)/rviz_cfg/testOdom.vcg"/>
+
+</launch>
