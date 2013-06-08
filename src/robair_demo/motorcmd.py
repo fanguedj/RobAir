@@ -148,12 +148,18 @@ class MotionControlNode(object):
 			        self.obstacles.north_left  >= value and
 			        self.obstacles.north_right >= value and
 			        self.obstacles.north_east  >= value):
-            print "front Sensor is OK ++++++++++"
             return True
         else:
-	    print self.potholes.hole
-	    print value
-	    print "front sensos NOT OK ---------"
+            return False
+
+    def isRearSensorsOK(self, value):
+        if not self.potholes.hole and (
+			        self.obstacles.south_west  >= value and
+			        self.obstacles.south_left  >= value and
+			        self.obstacles.south_right >= value and
+			        self.obstacles.south_east  >= value):
+            return True
+        else:
             return False
 
     def move(self):
@@ -166,6 +172,14 @@ class MotionControlNode(object):
                 else:
                     print "reverse order"
                     self.send_order_backtrack(direction)
+	    elif direction ==1:
+                if self.isRearSensorsOK(15):
+                    print "order normal"
+                    self.send_order(direction)
+                else:
+                    print "reverse order"
+                    self.send_order_backtrack(direction)
+
             else:
                 self.send_order(direction)
         else:

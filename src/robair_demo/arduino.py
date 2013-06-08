@@ -14,8 +14,8 @@ class ArduinoSensorsNode(object):
     Ultrasound obstacles detection goes to /sensor/ultrasound_obstacles
     '''
     INFRA_NB = 4
-    ULTRA_FRONT_NB = 8
-    ULTRA_REAR_NB = 0
+    ULTRA_FRONT_NB = 4
+    ULTRA_REAR_NB = 4
     OBSTACLE_STOP_DIST = 20 # centimeters
 
     def __init__(self, serial_port, node_name="robair_arduino_sensors"):
@@ -56,8 +56,8 @@ class ArduinoSensorsNode(object):
             obstacles.append(self.normalize_distance(dist))
             front_obstacle = front_obstacle or (
                 obstacles[-1] <= self.OBSTACLE_STOP_DIST)
-        for dist in split_line[1+self.ULTRA_FRONT_NB+1:
-                               1+self.ULTRA_FRONT_NB+1+self.ULTRA_REAR_NB]:
+        for dist in split_line[1+self.ULTRA_FRONT_NB:
+                               1+self.ULTRA_FRONT_NB+self.ULTRA_REAR_NB]:
             obstacles.append(self.normalize_distance(dist))
             rear_obstacle = rear_obstacle or (
                 obstacles[-1] <= self.OBSTACLE_STOP_DIST)
