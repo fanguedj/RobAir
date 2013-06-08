@@ -23,7 +23,7 @@ def talker():
     while not rospy.is_shutdown():
         send_bytes(ser,"\x25") #GET_ENCODERS
         recu = ser.read(8)
-        print recu.encode("hex")
+        #print recu.encode("hex")
         recu = long(recu.encode("hex"),16)
         wheel1 = recu % 0x100000000#0xFFFFFFFF
         wheel2 = recu / 0x100000000 #0xFFFFFFFF
@@ -32,7 +32,7 @@ def talker():
         print "roue gauche :" + str(wheel1)
         print "roue droite :" + str(wheel2)
         pub.publish(wheel2,wheel1)
-        rospy.sleep(0.2)
+        rospy.sleep(0.02)
 
 
 if __name__ == '__main__':
