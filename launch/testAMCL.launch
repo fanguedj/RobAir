@@ -1,0 +1,30 @@
+<launch>
+
+  <include file="$(find robair_demo)/launch/hokuyoLaser.launch" />
+
+  <include file="$(find robair_demo)/launch/pilotageClavier.launch" />
+
+  <include file="$(find robair_demo)/launch/odometry.launch" />
+
+
+  <!--Chargement de la map-->
+  <node pkg="map_server" type="map_server" name="map_server" args="$(find robair_demo)/maps/imag3_2.yaml"/>
+
+  <node pkg="amcl" type="amcl" name="amcl">
+    <param name="odom_model_type" value="diff"/>
+    <param name="odom_frame_id" value="odom"/>
+    <param name="base_frame_id" value="base_link"/>
+    <param name="global_frame_id" value="map"/>
+    <param name="first_map_only" value="true"/><!--default : false-->
+    <param name="use_map_topic" value="false"/><!--default : false-->
+  </node>
+
+
+    <node pkg="tf" type="static_transform_publisher" name="base_frame_to_laser_broadcaster" args="0 0 0 0 0 0 base_frame laser 100"/>
+
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_base_frame" args="0 0 0 0 0 0 base_link base_frame 100"/>
+    
+
+  </launch>
+
+

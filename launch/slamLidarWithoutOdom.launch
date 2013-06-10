@@ -1,6 +1,6 @@
 <launch>
-
-  <node pkg="hokuyo_node" type="hokuyo_node" name="hokuyo_node"/>
+  
+  <include file="$(find robair_demo)/launch/hokuyoLaser.launch" />
 
   <include file="$(find hector_mapping)/launch/mapping_default.launch">
     <arg name="base_frame" value="base_frame"/>

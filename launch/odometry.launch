@@ -1,0 +1,6 @@
+<launch>
+  <!--Lance le getteur d'encoder et le calcul d'odometrie-->
+  <!-- fichier inclut dans d'autres launch file, useless seul-->
+  <node pkg="robair_demo" type="encoder_publish.py" name="encoder_publish"/>
+  <node pkg="robair_demo" type="odometry" name="odometry"/>
+</launch>

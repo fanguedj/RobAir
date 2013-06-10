@@ -1,17 +1,10 @@
 <launch>
 
-  <node pkg="hokuyo_node" type="hokuyo_node" name="hokuyo_node"/>
+  <include file="$(find robair_demo)/launch/hokuyoLaser.launch" />
 
-  <node pkg="robair_demo" type="encoder_publish.py" name="encoder_publish"/>
+  <include file="$(find robair_demo)/launch/odometry.launch" />
 
-   <node pkg="robair_demo" type="odometry" name="odometry"/>
-
-
-  <nodse pkg="robair_demo" type="arduino_sensors.py" name="arduino_sensors"/>
-
-  <node pkg="robair_demo" type="motion_control_node.py" name="motion_control_node"/>
-
-  <node pkg="robair_demo" type="kb_control.py" name="kb_control"/>
+  <include file="$(find robair_demo)/launch/pilotageClavier.launch" />
 
 
   <include file="$(find hector_mapping)/launch/mapping_default.launch">
