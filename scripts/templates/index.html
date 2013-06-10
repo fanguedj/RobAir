@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Flask/Gevent WebSocket Test</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function(){
+            $('form').submit(function(event){
+                ws.send($('#data').val())
+                return false;
+            });
+                if ("WebSocket" in window) {
+                var loc = window.location, new_uri;
+                if (loc.protocol === "https:") {
+                    new_uri = "wss:";
+                } else {
+                    new_uri = "ws:";
+                }
+                new_uri += "//" + loc.host;
+                new_uri += loc.pathname + "/api";
+                ws = new WebSocket(new_uri);
+                ws.onmessage = function (msg) {
+                    $("#log").append("<p>"+msg.data+"</p>")
+                };
+            } else {
+                alert("WebSocket not supported");
+            }
+        });
+    </script>
+</head>
+<body>
+<a href="https://github.com/SalemHarrache/websocket_echo_example">
+  <img style="position: absolute; top: 0; right: 0; border: 0;"
+       src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub">
+</a>
+    <h1>Send:</h1>
+    <form method='POST' action=''>
+        <textarea name='data' id="data"></textarea>
+        <div><input type='submit'></div>
+    </form>
+    <h1>Receive:</h1>
+    <div id="log"></div>
+</body>
+</html>

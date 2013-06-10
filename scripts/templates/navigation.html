@@ -1,0 +1,109 @@
+<html>
+  <head>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/static/js/websockets1.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style2.css')}}" type="text/css" />
+    <link rel="icon" type="image/png" href="/static/images/favicon.png" />
+    
+    <link rel="stylesheet" href="static/jquerry/jquery.countdown.css" />
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script src="static/jquerry/jquery.countdown.js"></script>
+    <script src="static/js/compteur.js"></script>
+    
+    <script type="text/javascript" language="javascript">
+      function position(e) {
+      x = (navigator.appName.substring(0, 3) == "Net") ? e.pageX : event.x + document.body.scrollLeft;
+      y = (navigator.appName.substring(0, 3) == "Net") ? e.pageY : event.y + document.body.scrollTop;
+      document.title = "Robair Navigation";
+      }
+    </script>
+
+  </head>
+
+  <body onresize="window.location.reload();">
+
+    <div id="countdown"></div>
+    
+    <script type="text/javascript" language="javascript">
+      if (navigator.appName.substring(0, 3) == "Net")
+      document.captureEvents(Event.MOUSEMOVE);
+      document.onmousemove = position;
+    </script>
+
+    <div id="info">
+      <span id="result"></span>
+    </div>
+
+    <script type="text/javascript" src="/static/js/virtualjoystick14.js"></script>
+
+    <script>
+      console.log("touchscreen is", VirtualJoystick.touchScreenAvailable() ? "available" : "not available");
+      var joystick = new VirtualJoystick({
+      container : document.getElementById('container'),
+      mouseSupport : true
+      });
+      setInterval(function() {
+      var outputEl = document.getElementById('result');
+      //outputEl.innerHTML = '<b>Result:</b> ' + ' dx:' + joystick.deltaX() + ' dy:' + joystick.deltaY() + (joystick.right() ? ' right' : '') + (joystick.up() ? ' up' : '') + (joystick.left() ? ' left' : '') + (joystick.down() ? ' down' : '');
+      //directions commands.
+      if (joystick.up()) {
+      goTop();
+      } else if (joystick.down()) {
+      goBack();
+      } else if (joystick.right()) {
+      goRight();
+      } else if (joystick.left())
+      goLeft();
+      }, 1 / 30 * 1000);
+    </script>
+    
+    <block id="element">
+      <div id="Consigne">
+	<p> Touchez la zone pour faire bouger le robot, appuyez sur stop pour l'arrêter </p>
+      </div>		
+      <div class="myButton">
+	<input id="btnStop" type="button" onClick="stopMove()" value="STOP">
+      </div>
+    </block>
+
+    <block id="geolocalisation">
+      <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Location</title>
+	
+	<script type="text/javascript">
+	  var url = '';
+	  
+	  function load() {
+	  url = document.getElementById('robair_localisation').src;
+	  setInterval('refresh_img()', 1000);
+	  }
+	  
+	  function refresh_img() {
+	  var ndate = new Date();
+	  var nocache = ndate.getTime();
+	  
+	  document.getElementById('robair_localisation').src = url + '?' + nocache;
+	  }
+	  
+	  var previousOnload = window.onload;
+	  window.onload = function () { if(previousOnload) previousOnload(); load(); }
+	</script>
+	
+      </head>
+
+      <body>
+	<img id="robair_localisation" src="/static/images/qr_code_air.jpg" alt="localisation" />
+      </body>
+
+    </block>
+
+    <block>
+      <img src="/static/images/qr_code_air.jpg" alt="une image de test" />
+    </block>
+    
+  </body>
+
+</html>

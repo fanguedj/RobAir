@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>RobAIR : Reservation page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}" type="text/css" />
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
+</head>
+<body>
+    <h1>Reservation</h1>
+
+    <form method=GET action="http://127.0.0.1:4242/api/new" onsubmit='showId()'>    
+    <table BORDER=0 class= fenetre>
+    	<tr></tr>
+	<tr>
+	    <td>Put your jabber identifiant :</td>
+	</tr>
+	<tr>
+	<td><input id='idJab' type=text name="jid" class=text>  </td>
+	
+	<tr><div id="conteneur">
+	      <td COLSPAN=2><input type="submit" value="Send" class=myButton></td></div>
+	</tr>
+	<tr></tr>
+	
+    </table>
+    </br>    
+        <h3> RobAir project</h2>
+
+    </form> 
+</body>
+</html>
