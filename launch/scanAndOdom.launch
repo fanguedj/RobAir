@@ -1,0 +1,22 @@
+<launch>
+
+  <node pkg="hokuyo_node" type="hokuyo_node" name="hokuyo_node"/>
+
+  <node pkg="robair_demo" type="encoder_publish.py" name="encoder_publish"/>
+
+  <node pkg="robair_demo" type="arduino_sensors.py" name="arduino_sensors"/>
+
+  <node pkg="robair_demo" type="motion_control_node.py" name="motion_control_node"/>
+
+  <node pkg="robair_demo" type="kb_control.py" name="kb_control"/>
+
+  <node pkg="robair_demo" type="odometry" name="odometry"/>
+
+    <node pkg="tf" type="static_transform_publisher" name="base_frame_to_laser_broadcaster" args="0 0 0 0 0 0 base_frame laser 100"/>
+
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_base_frame" args="0 0 0 0 0 0 base_link base_frame 100"/>
+  
+
+</launch>
+
+
