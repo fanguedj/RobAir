@@ -72,7 +72,7 @@ void calculOdometry(const robair_demo::encoderData::ConstPtr& msg)
    tickD = msg->wheelRight;
    int32_t dtickG = tickG - tickGPrec;//vg
    int32_t dtickD = tickD - tickDPrec;//vd
-   double dThetaTicks = (dtickG - dtickD)/2; 
+   double dThetaTicks = -(dtickG - dtickD)/2; 
    double dDeltaTicks = (dtickG + dtickD)/2;//v
    ROS_INFO("dDelta = %lf, dTheta = %lf",  dDeltaTicks,  dThetaTicks);
    double vth = (dThetaTicks*TICK_TO_RAD);// en Rad
