@@ -1,6 +1,6 @@
 <launch> 
 
-  <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping">
+  <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" launch-prefix="xterm -e gdb --args">
     <param name="map_udpate_interval" value="1.0"/><!--def : 5.0 -->
     <param name="maxUrange" value="4.5"/><!-- default : 80-->
     <param name="sigma" value="0.05"/>
@@ -18,12 +18,12 @@
     <param name="linearUpdate" value="0.1"/><!--1.0-->
     <param name="angularUpdate" value="0.1"/><!--0.5-->
     <param name="resampleThreshold" value="0.5"/>
-    <param name="particles" value="100"/><!--30-->
+    <param name="particles" value="90"/><!--30-->
     <param name="xmin" value="-50.0"/><!-- initial size map -->
     <param name="ymin" value="-50.0"/>
     <param name="xmax" value="50.0"/>
     <param name="ymax" value="50.0"/>
-    <param name="delta" value="0.025"/><!-- resolution def :0.05=5cm=1px -->
+    <param name="delta" value="0.05"/><!-- resolution def :0.05=5cm=1px -->
     <param name="llsamplerange" value="0.01"/>
     <param name="llsamplestep" value="0.01"/>
     <param name="lasamplerange" value="0.005"/>

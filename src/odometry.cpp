@@ -105,7 +105,7 @@ int main(int argc, char **argv)
    // subscribing to /encoder
    ros::Subscriber sub = n.subscribe("encoder", 1000, calculOdometry);
 
-   ros::Rate loop_rate(50);
+   ros::Rate loop_rate(100);
 
    ROS_INFO("TICK_TO_RAD : %lf", TICK_TO_RAD);
    ROS_INFO("TICKS_TO_M : %lf", TICKS_TO_M);
