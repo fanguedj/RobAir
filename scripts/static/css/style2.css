@@ -126,8 +126,8 @@ body {
 }
 #element {
     position	: fixed;
-    left	: 1%;
-    bottom	: 55%;
+    left	: 10%;
+    top		: 1%;
 }
 #geolocalisation {
     position	: fixed;
@@ -174,3 +174,8 @@ body {
     height: 0%;		
 }
 
+#map_webcam{
+    position	: fixed;
+    bottom	: 1%;
+    right	: 1%;
+}

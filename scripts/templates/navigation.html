@@ -61,48 +61,52 @@
     
     <block id="element">
       <div id="Consigne">
-	<p> Touchez la zone pour faire bouger le robot, appuyez sur stop pour l'arrêter </p>
+	<p> Touchez la zone jaune pour faire bouger le robot</p>
+	<p> Appuyez sur "STOP" pour l'arrêter</p>
       </div>		
       <div class="myButton">
 	<input id="btnStop" type="button" onClick="stopMove()" value="STOP">
       </div>
     </block>
 
-    <block id="geolocalisation">
-      <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>Location</title>
-	
-	<script type="text/javascript">
-	  var url = '';
+    <!------------------------------------------------------------------------->
+    <!--<MAP_WEBCAM>-->
+    <!------------------------------------------------------------------------->
+    <block id="map_webcam">
+	<head>
+	  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	  <title>Location</title>
 	  
-	  function load() {
-	  url = document.getElementById('robair_localisation').src;
-	  setInterval('refresh_img()', 1000);
-	  }
-	  
-	  function refresh_img() {
-	  var ndate = new Date();
-	  var nocache = ndate.getTime();
-	  
-	  document.getElementById('robair_localisation').src = url + '?' + nocache;
-	  }
-	  
-	  var previousOnload = window.onload;
-	  window.onload = function () { if(previousOnload) previousOnload(); load(); }
-	</script>
-	
-      </head>
+	  <script type="text/javascript">
+	    var url_map = '';
+	    var url_webcam = '';
 
-      <body>
-	<img id="robair_localisation" src="/static/images/qr_code_air.jpg" alt="localisation" />
-      </body>
+	    function load() {
+	    url_map = document.getElementById('robair').src;
+	    url_webcam = document.getElementById('photo').src;
+	    setInterval('refresh_img()', 100);
+	    }
+	    
+	    function refresh_img() {
+	    var ndate = new Date();
+	    var nocache = ndate.getTime();
+	    document.getElementById('robair').src = url_map + '?' + nocache;
+	    document.getElementById('photo').src = url_webcam + '?' + nocache;
+	    }
+	    
+	    var previousOnload = window.onload;
+	    window.onload = function () { if(previousOnload) previousOnload(); load(); }
+	  </script>
+	  
+	</head>
 
+	<body>
+	  <img id="robair" src="/static/images/map.jpg" alt="localisation" />
+	  <img id="photo" src="/static/images/webcam.jpeg" />
+	</body>
     </block>
 
-    <block>
-      <img src="/static/images/qr_code_air.jpg" alt="une image de test" />
-    </block>
+    <img src="/static/images/qr_code_air.jpg" alt="Logo AIR" />
     
   </body>
 
