@@ -78,7 +78,7 @@ class MotionControlNode(object):
         rospy.Subscriber('/sensor/infrared_potholes', InfraredPotholes, self.new_potholes_callback)
         rospy.Subscriber('/sensor/ultrasound_obstacles', UltrasoundObstacles, self.new_obstacles_callback)
         self.pub = rospy.Publisher('encoder', encoderData)
-        self.ser = serial.Serial(serial_port, 38400)
+        self.ser = serial.Serial(serial_port, 38400, timeout=0.2)
         self.current_cmd = Command(5); # Invalid command
         self.potholes = InfraredPotholes(hole=True);
 
@@ -219,14 +219,18 @@ class MotionControlNode(object):
     def encoder(self):
         self.send_bytes(Commands.GET_ENCODERS)
         recu = self.ser.read(8)
-        recu = long(recu.encode("hex"),16)
-        wheel1 = recu % 0x100000000#0xFFFFFFFF
-        wheel2 = recu / 0x100000000 #0xFFFFFFFF
-        wheel1 =  - c_int(wheel1).value #inversion empirique
-        wheel2 = - c_int(wheel2).value
-        print "roue gauche :" + str(wheel1)
-        print "roue droite :" + str(wheel2)
-        self.pub.publish(wheel2,wheel1)
+        #psssssrint "recu" + str(recu)
+        if recu :
+            recu = long(recu.encode("hex"),16)
+            wheel1 = recu % 0x100000000#0xFFFFFFFF
+            wheel2 = recu / 0x100000000 #0xFFFFFFFF
+            wheel1 =  - c_int(wheel1).value #inversion empirique
+            wheel2 = - c_int(wheel2).value
+            print "roue gauche :" + str(wheel1)
+            print "roue droite :" + str(wheel2)
+            self.pub.publish(wheel2,wheel1)
+        else:
+            print "___________________TIMEOUT_________________"
 
     def main_loop(self):
         # We chose to leave the timeout enabled (i.e. the robot will stop if it
@@ -236,17 +240,19 @@ class MotionControlNode(object):
         # there is a problem.
         self.send_bytes(Commands.ENABLE_TIMEOUT)
         r =  rospy.Rate(10)
-        cpt=0
+        #cpt=0
         self.send_bytes(Commands.RESET_ENCODERS)
         while not rospy.is_shutdown():
             self.encoder()
-            if cpt == 10 :
-                self.move()
-                cpt = 0
-            cpt = cpt +1
-            r.sleep();
+            #if cpt == 10 :
+                #self.move()
+                #cpt = 0
+            #cpt = cpt +1
             # TODO use rospy.rate DONE
             #time.sleep(1)
+            print "                         boucle"
+            #rospy.sleep(0.1)
+            r.sleep();
 
 
     def shutdown(self):
