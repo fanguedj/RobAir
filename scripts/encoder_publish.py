@@ -4,7 +4,6 @@ import rospy
 import serial
 import array
 from ctypes import *
-#from std_msgs.msg import String
 from robair_demo.msg import encoderData
 
 
