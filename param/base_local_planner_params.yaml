@@ -1,7 +1,7 @@
 TrajectoryPlannerROS:
   # for details see: http://www.ros.org/wiki/base_local_planner
-  max_vel_x: 0.45
-  min_vel_x: 0.1
+  max_vel_x: 0.30
+  min_vel_x: 0.05
   max_rotational_vel: 1.0
   min_in_place_rotational_vel: 0.4
 
