@@ -174,7 +174,7 @@ body {
     height: 0%;		
 }
 
-#map_webcam{
+#map{
     position	: fixed;
     bottom	: 1%;
     right	: 1%;
