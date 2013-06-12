@@ -23,16 +23,26 @@ struct Command_ {
 
   Command_()
   : move(0)
+  , speed1(0)
+  , turn(0)
   {
   }
 
   Command_(const ContainerAllocator& _alloc)
   : move(0)
+  , speed1(0)
+  , turn(0)
   {
   }
 
   typedef int8_t _move_type;
   int8_t move;
+
+  typedef uint8_t _speed1_type;
+  uint8_t speed1;
+
+  typedef uint8_t _turn_type;
+  uint8_t turn;
 
 
   typedef boost::shared_ptr< ::robair_demo::Command_<ContainerAllocator> > Ptr;
@@ -63,12 +73,12 @@ template<class ContainerAllocator>
 struct MD5Sum< ::robair_demo::Command_<ContainerAllocator> > {
   static const char* value() 
   {
-    return "0f5105fdd0c74f51939677182bb6cf00";
+    return "aad7705f458e58c9cfe5dce9c207d7de";
   }
 
   static const char* value(const  ::robair_demo::Command_<ContainerAllocator> &) { return value(); } 
-  static const uint64_t static_value1 = 0x0f5105fdd0c74f51ULL;
-  static const uint64_t static_value2 = 0x939677182bb6cf00ULL;
+  static const uint64_t static_value1 = 0xaad7705f458e58c9ULL;
+  static const uint64_t static_value2 = 0xcfe5dce9c207d7deULL;
 };
 
 template<class ContainerAllocator>
@@ -86,6 +96,8 @@ struct Definition< ::robair_demo::Command_<ContainerAllocator> > {
   static const char* value() 
   {
     return "int8 move\n\
+uint8 speed1\n\
+uint8 turn\n\
 \n\
 ";
   }
@@ -107,6 +119,8 @@ template<class ContainerAllocator> struct Serializer< ::robair_demo::Command_<Co
   template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
   {
     stream.next(m.move);
+    stream.next(m.speed1);
+    stream.next(m.turn);
   }
 
   ROS_DECLARE_ALLINONE_SERIALIZER;
@@ -126,6 +140,10 @@ struct Printer< ::robair_demo::Command_<ContainerAllocator> >
   {
     s << indent << "move: ";
     Printer<int8_t>::stream(s, indent + "  ", v.move);
+    s << indent << "speed1: ";
+    Printer<uint8_t>::stream(s, indent + "  ", v.speed1);
+    s << indent << "turn: ";
+    Printer<uint8_t>::stream(s, indent + "  ", v.turn);
   }
 };
 
