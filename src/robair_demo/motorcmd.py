@@ -79,7 +79,7 @@ class MotionControlNode(object):
         rospy.Subscriber('/sensor/ultrasound_obstacles', UltrasoundObstacles, self.new_obstacles_callback)
         self.pub = rospy.Publisher('encoder', encoderData)
         self.ser = serial.Serial(serial_port, 38400, timeout=0.2)
-        self.current_cmd = Command(5); # Invalid command
+        self.current_cmd = Command(6); # Invalid command
         self.potholes = InfraredPotholes(hole=True);
 
     def new_cmd_callback(self, cmd):
@@ -134,6 +134,11 @@ class MotionControlNode(object):
             self.send_bytes(Commands.SET_SPEED_2_OR_TURN, Turns.RIGHT)
         elif order == 4: # stop wheels
             print "stop"
+	elif order == 5: #commande AMCL
+	    print "AMCL"
+            self.send_bytes(Commands.SET_SPEED_1_OR_BOTH, self.current_cmd.speed1)
+            self.send_bytes(Commands.SET_SPEED_2_OR_TURN, self.current_cmd.turn)
+	    
             
     def send_order_backtrack(self, order):
         '''send backtrack orders(reverse order) through serial port'''
@@ -168,7 +173,7 @@ class MotionControlNode(object):
 
     def move(self):
         direction = self.current_cmd.move
-        if direction < 5:
+        if direction < 6:
             if direction == 0:  
                 if self.isFrontSensorsOK(15):
                     print "order normal"
@@ -183,6 +188,13 @@ class MotionControlNode(object):
                 else:
                     print "reverse order"
                     self.send_order_backtrack(direction)
+	    elif direction == 5: #cas ou on utilise AMCL
+                if self.isFrontSensorsOK(15):
+                    print "order normal"
+                    self.send_order(5)#ordrec omposite pour AMCL (et tablette ?)
+                else:
+                    print "reverse order"
+                    self.send_order_order(4) #on attends 
 
             else:
                 self.send_order(direction)
