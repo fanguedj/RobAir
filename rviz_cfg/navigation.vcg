@@ -1,0 +1,145 @@
+Background\ ColorB=0
+Background\ ColorG=0
+Background\ ColorR=0
+Camera\ Config=137.132 0 0 0
+Camera\ Type=rviz::FixedOrientationOrthoViewController
+Current\ Goal.Alpha=1
+Current\ Goal.ColorB=0
+Current\ Goal.ColorG=0.1
+Current\ Goal.ColorR=1
+Current\ Goal.Enabled=1
+Current\ Goal.Head\ Length=0.3
+Current\ Goal.Head\ Radius=0.2
+Current\ Goal.Shaft\ Length=1
+Current\ Goal.Shaft\ Radius=0.1
+Current\ Goal.Shape=0
+Current\ Goal.Topic=/move_base/current_goal
+Fixed\ Frame=/map
+Global\ Plan.Alpha=1
+Global\ Plan.ColorB=0
+Global\ Plan.ColorG=1
+Global\ Plan.ColorR=0.1
+Global\ Plan.Enabled=1
+Global\ Plan.Topic=/move_base/TrajectoryPlannerROS/global_plan
+Inflated\ Obstacles.Alpha=1
+Inflated\ Obstacles.ColorB=1
+Inflated\ Obstacles.ColorG=0.0705882
+Inflated\ Obstacles.ColorR=0
+Inflated\ Obstacles.Enabled=1
+Inflated\ Obstacles.Topic=/move_base/local_costmap/inflated_obstacles
+LaserScan..AxisColorAutocompute\ Value\ Bounds=1
+LaserScan..AxisColorAxis=2
+LaserScan..AxisColorMax\ Value=10
+LaserScan..AxisColorMin\ Value=-10
+LaserScan..AxisColorUse\ Fixed\ Frame=1
+LaserScan..FlatColorColorB=1
+LaserScan..FlatColorColorG=1
+LaserScan..FlatColorColorR=1
+LaserScan..IntensityAutocompute\ Intensity\ Bounds=1
+LaserScan..IntensityChannel\ Name=intensity
+LaserScan..IntensityMax\ ColorB=1
+LaserScan..IntensityMax\ ColorG=1
+LaserScan..IntensityMax\ ColorR=1
+LaserScan..IntensityMax\ Intensity=4096
+LaserScan..IntensityMin\ ColorB=0
+LaserScan..IntensityMin\ ColorG=0
+LaserScan..IntensityMin\ ColorR=0
+LaserScan..IntensityMin\ Intensity=0
+LaserScan..IntensityUse\ full\ RGB\ spectrum=0
+LaserScan.Alpha=1
+LaserScan.Billboard\ Size=0.01
+LaserScan.Color\ Transformer=Intensity
+LaserScan.Decay\ Time=0
+LaserScan.Enabled=0
+LaserScan.Position\ Transformer=XYZ
+LaserScan.Queue\ Size=10
+LaserScan.Selectable=1
+LaserScan.Style=1
+LaserScan.Topic=/scan
+Local\ Plan.Alpha=1
+Local\ Plan.ColorB=1
+Local\ Plan.ColorG=0.0705882
+Local\ Plan.ColorR=0
+Local\ Plan.Enabled=1
+Local\ Plan.Topic=/move_base/TrajectoryPlannerROS/local_plan
+Obstacles.Alpha=1
+Obstacles.ColorB=0
+Obstacles.ColorG=0.0980392
+Obstacles.ColorR=1
+Obstacles.Enabled=1
+Obstacles.Topic=/move_base/local_costmap/obstacles
+Odometry.Angle\ Tolerance=0.1
+Odometry.ColorB=0.498039
+Odometry.ColorG=0
+Odometry.ColorR=0.333333
+Odometry.Enabled=1
+Odometry.Keep=100
+Odometry.Length=1
+Odometry.Position\ Tolerance=0.1
+Odometry.Topic=/odom
+Particle\ Cloud.Arrow\ Length=0.3
+Particle\ Cloud.ColorB=0
+Particle\ Cloud.ColorG=0.1
+Particle\ Cloud.ColorR=1
+Particle\ Cloud.Enabled=1
+Particle\ Cloud.Topic=/particlecloud
+Planner\ Plan.Alpha=1
+Planner\ Plan.ColorB=0
+Planner\ Plan.ColorG=1
+Planner\ Plan.ColorR=0.1
+Planner\ Plan.Enabled=1
+Planner\ Plan.Topic=/move_base/NavfnROS/plan
+Property\ Grid\ Splitter=619,78
+Property\ Grid\ State=expanded=.Global Options,Static Map.Enabled,Particle Cloud.Enabled,Robot Footprint.Enabled,Obstacles.Enabled,Inflated Obstacles.Enabled,Global Plan.Enabled,Local Plan.Enabled,Planner Plan.Enabled,Current Goal.Enabled,Current Goal.Shape Properties,Odometry.Enabled,LaserScan.Enabled;splitterratio=0.5
+QMainWindow=000000ff00000000fd0000000300000000000001750000030bfc0200000001fb000000100044006900730070006c006100790073010000001d0000030b000000ee00ffffff00000001000001450000030bfc0200000003fb0000001e0054006f006f006c002000500072006f0070006500720074006900650073010000001d000000ca0000006700fffffffb0000000a0056006900650077007301000000ed0000016b000000bb00fffffffb0000001200530065006c0065006300740069006f006e010000025e000000ca0000006700ffffff00000003000005a00000003efc0100000001fb0000000800540069006d00650100000000000005a0000002bf00ffffff000002da0000030b00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+Robot\ Footprint.Alpha=1
+Robot\ Footprint.ColorB=0
+Robot\ Footprint.ColorG=0.0980392
+Robot\ Footprint.ColorR=1
+Robot\ Footprint.Enabled=1
+Robot\ Footprint.Topic=/move_base/local_costmap/robot_footprint
+Static\ Map.Alpha=0.7
+Static\ Map.Draw\ Behind=0
+Static\ Map.Enabled=1
+Static\ Map.Topic=/map
+Target\ Frame=/map
+Tool\ 2D\ Nav\ GoalTopic=/move_base_simple/goal
+Tool\ 2D\ Pose\ EstimateTopic=initialpose
+[Display0]
+ClassName=rviz::MapDisplay
+Name=Static Map
+[Display1]
+ClassName=rviz::PoseArrayDisplay
+Name=Particle Cloud
+[Display10]
+ClassName=rviz::LaserScanDisplay
+Name=LaserScan
+[Display2]
+ClassName=rviz::PolygonDisplay
+Name=Robot Footprint
+[Display3]
+ClassName=rviz::GridCellsDisplay
+Name=Obstacles
+[Display4]
+ClassName=rviz::GridCellsDisplay
+Name=Inflated Obstacles
+[Display5]
+ClassName=rviz::PathDisplay
+Name=Global Plan
+[Display6]
+ClassName=rviz::PathDisplay
+Name=Local Plan
+[Display7]
+ClassName=rviz::PathDisplay
+Name=Planner Plan
+[Display8]
+ClassName=rviz::PoseDisplay
+Name=Current Goal
+[Display9]
+ClassName=rviz::OdometryDisplay
+Name=Odometry
+[Window]
+Height=913
+Width=1456
+X=-8
+Y=-275
