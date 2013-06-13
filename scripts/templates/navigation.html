@@ -1,49 +1,49 @@
 <html lang="fr">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/style2.css')}}" type="text/css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}" type="text/css" />
     <link rel="icon" type="image/png" href="/static/images/favicon.png" />
     <link rel="stylesheet" href="static/jquerry/jquery.countdown.css" />
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="/static/js/websockets1.js"></script>
-	<script type="text/javascript" src="/static/js/ros.min.js"></script>
-	<script type="text/javascript">
-		var img;
-		var connection;
-		function main() {
-			img = document.getElementById("video");
-			img.src = "http://127.0.0.0:8080/stream?topic=/gscam/image_raw";
-			connection = new ros.Connection("ws://172.16.115.147:9090");
-			connection.setOnClose(function (e) {});
-			connection.setOnError(function (e) {});
-			connection.setOnOpen(function (e) {
-				document.addEventListener('keydown', function (e) {
-					handleKey(e.keyCode, true);
-				}, true);
-				document.addEventListener('keyup', function (e) {
-					handleKey(e.keyCode, false);
-				}, true);
-			});
-		}
-	</script>
+    <script type="text/javascript" src="/static/js/ros.min.js"></script>
+    <script type="text/javascript">
+      var img;
+      var connection;
+      function main() {
+      img = document.getElementById("video");
+      img.src = "http://127.0.0.0:8080/stream?topic=/gscam/image_raw";
+      connection = new ros.Connection("ws://172.16.115.147:9090");
+      connection.setOnClose(function (e) {});
+      connection.setOnError(function (e) {});
+      connection.setOnOpen(function (e) {
+      document.addEventListener('keydown', function (e) {
+      handleKey(e.keyCode, true);
+      }, true);
+      document.addEventListener('keyup', function (e) {
+      handleKey(e.keyCode, false);
+      }, true);
+      });
+      }
+    </script>
 
     <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <script src="static/jquerry/jquery.countdown.js"></script>
     <script src="static/js/compteur.js"></script>
     
     <script type="text/javascript" language="javascript">
-		function position(e) {
-			x = (navigator.appName.substring(0, 3) == "Net") ? e.pageX : event.x + document.body.scrollLeft;
-			y = (navigator.appName.substring(0, 3) == "Net") ? e.pageY : event.y + document.body.scrollTop;
-			document.title = "Robair Navigation";
-		}
+      function position(e) {
+      x = (navigator.appName.substring(0, 3) == "Net") ? e.pageX : event.x + document.body.scrollLeft;
+      y = (navigator.appName.substring(0, 3) == "Net") ? e.pageY : event.y + document.body.scrollTop;
+      document.title = "Robair Navigation";
+      }
     </script>
 
-</head>
+  </head>
 
-<body onresize="window.location.reload();" onload="main();">
+  <body onresize="window.location.reload();" onload="main();">
 
     <div id="countdown"></div>
     
@@ -94,39 +94,39 @@
     <!--<MAP>-->
     <!------------------------------------------------------------------------->
     <block id="map">
-		<head>
-		  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		  <title>Localisation</title>
-		  
-		  <script type="text/javascript">
-			var url = '';
+      <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Localisation</title>
+	
+	<script type="text/javascript">
+	  var url = '';
 
-			function load() {
-				url = document.getElementById('robair').src;
-				setInterval('refresh_img()', 100);
-			}
-			
-			function refresh_img() {
-				var ndate = new Date();
-				var nocache = ndate.getTime();
-				document.getElementById('robair').src = url_map + '?' + nocache;
-			}
-			
-			var previousOnload = window.onload;
-			window.onload = function () { if(previousOnload) previousOnload(); load(); }
-		  </script>
-		  
-		</head>
+	  function load() {
+	  url = document.getElementById('robair').src;
+	  setInterval('refresh_img()', 100);
+	  }
+	  
+	  function refresh_img() {
+	  var ndate = new Date();
+	  var nocache = ndate.getTime();
+	  document.getElementById('robair').src = url_map + '?' + nocache;
+	  }
+	  
+	  var previousOnload = window.onload;
+	  window.onload = function () { if(previousOnload) previousOnload(); load(); }
+	</script>
+	
+      </head>
 
-		<body>
-		  <img id="robair" src="/static/images/ensimag3.pgm.jpg" width="500" height="500" alt="localisation" />
-		</body>
+      <body>
+	<img id="robair" src="/static/images/ensimag3.pgm.jpg" width="300" height="300" alt="localisation" />
+      </body>
     </block>
 
     <img src="/static/images/qr_code_air.jpg" alt="Logo AIR" />
 
-	<img style="position:fixed; bottom:1%; left:1%;" id="video" src="http://127.0.01:8080/stream?topic=/gscam/image_raw">
+    <img style="position:fixed; bottom:1%; right:1%;" id="video" src="http://127.0.01:8080/stream?topic=/gscam/image_raw">
     
-</body>
+  </body>
 </html>
 
