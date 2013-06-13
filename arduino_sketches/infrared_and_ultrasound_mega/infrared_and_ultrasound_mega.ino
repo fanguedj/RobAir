@@ -24,14 +24,14 @@ unsigned long infraredTimer;
 
 NewPing sonar[SONAR_NUM] = {     // Ultrasonic Sensor object array. Each sensor's trigger pin, echo pin, and max distance to ping.
 //each sensor localisation si done from the kinect Point of view
-  NewPing(52, 53, MAX_DISTANCE), //LEFT Sensor
-  NewPing(50, 51, MAX_DISTANCE), //FRONT LEFT Sensor
-  NewPing(48, 49, MAX_DISTANCE), //FRONT RIGHT Sensor
-  NewPing(46, 47, MAX_DISTANCE), //RIGH Sensor
-  NewPing(44, 45, MAX_DISTANCE),
-  NewPing(42, 43, MAX_DISTANCE),
-  NewPing(40, 41, MAX_DISTANCE),
-  NewPing(38, 39, MAX_DISTANCE)
+  NewPing(53, 52, MAX_DISTANCE), //LEFT Sensor
+  NewPing(51, 50, MAX_DISTANCE), //FRONT LEFT Sensor
+  NewPing(49, 48, MAX_DISTANCE), //FRONT RIGHT Sensor
+  NewPing(47, 46, MAX_DISTANCE), //RIGH Sensor
+  NewPing(45, 44, MAX_DISTANCE),
+  NewPing(43, 42, MAX_DISTANCE),
+  NewPing(41, 40, MAX_DISTANCE),
+  NewPing(39, 38, MAX_DISTANCE)
 /*  NewPing(31, 32, MAX_DISTANCE),
   NewPing(34, 33, MAX_DISTANCE),
   NewPing(35, 36, MAX_DISTANCE),
