@@ -11,7 +11,7 @@
   
 
   <!--Chargement de la map-->
-  <node pkg="map_server" type="map_server" name="map_server" args="$(find robair_demo)/maps/ensimag3.yaml"/>
+  <node pkg="map_server" type="map_server" name="map_server" args="$(find robair_demo)/maps/ensimag3_new.yaml"/>
 
   <!-- AMCL -->
   <node pkg="amcl" type="amcl" name="amcl">

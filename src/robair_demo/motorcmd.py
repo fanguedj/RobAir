@@ -79,7 +79,7 @@ class MotionControlNode(object):
         rospy.Subscriber('/sensor/ultrasound_obstacles', UltrasoundObstacles, self.new_obstacles_callback)
         self.pub = rospy.Publisher('encoder', encoderData)
         self.ser = serial.Serial(serial_port, 38400, timeout=0.2)
-        self.current_cmd = Command(6); # Invalid command
+        self.current_cmd = Command(6,0.0,0.0); # Invalid command
         self.potholes = InfraredPotholes(hole=True);
 
     def new_cmd_callback(self, cmd):
@@ -88,6 +88,12 @@ class MotionControlNode(object):
 
     def new_potholes_callback(self, potholes):
         self.potholes = potholes
+        #self.potholes.hole = not self.potholes.hole
+        if  self.potholes.hole:
+            print "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+            print "                   INFRA"
+            print "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+            #self.potholes.hole = False
         self.move()
         
     def new_obstacles_callback(self, obstacles):
@@ -107,12 +113,12 @@ class MotionControlNode(object):
 
     def stop_wheels(self):
         '''stop both motors'''
-        self.set_mode(Modes.UNSIGNED_SPEED_TURN)
-        self.send_bytes(Commands.SET_SPEED_1_OR_BOTH, Speeds.NONE)
+        #self.set_mode(Modes.UNSIGNED_SPEED_TURN)
+        #self.send_bytes(Commands.SET_SPEED_1_OR_BOTH, Speeds.NONE)
         # TODO Test whether the last 3 lines are useful
-        self.set_mode(Modes.UNSIGNED_SEPARATE_SPEEDS)
-        self.send_bytes(Commands.SET_SPEED_1_OR_BOTH, Speeds.NONE)
-        self.send_bytes(Commands.SET_SPEED_2_OR_TURN, Speeds.NONE)
+        #self.set_mode(Modes.UNSIGNED_SEPARATE_SPEEDS)
+        #self.send_bytes(Commands.SET_SPEED_1_OR_BOTH, Speeds.NONE)
+        #self.send_bytes(Commands.SET_SPEED_2_OR_TURN, Speeds.NONE)
         
     def send_order(self, order):
         '''send orders through serial port'''
@@ -121,9 +127,11 @@ class MotionControlNode(object):
         if order == 0: # move forward
             print "forward"
             self.send_bytes(Commands.SET_SPEED_1_OR_BOTH, self.computeSpeed())
+            self.send_bytes(Commands.SET_SPEED_2_OR_TURN, Speeds.NONE)
         elif order == 1: # move backward
             print "backward"
             self.send_bytes(Commands.SET_SPEED_1_OR_BOTH, Speeds.BACKWARD_MEDIUM)
+            self.send_bytes(Commands.SET_SPEED_2_OR_TURN, Speeds.NONE)
         elif order == 2: # turn left
             print "left"
             self.send_bytes(Commands.SET_SPEED_1_OR_BOTH, Speeds.NONE)
@@ -134,8 +142,10 @@ class MotionControlNode(object):
             self.send_bytes(Commands.SET_SPEED_2_OR_TURN, Turns.RIGHT)
         elif order == 4: # stop wheels
             print "stop"
+            self.send_bytes(Commands.SET_SPEED_1_OR_BOTH, Speeds.NONE)
+            self.send_bytes(Commands.SET_SPEED_2_OR_TURN, Speeds.NONE)
 	elif order == 5: #commande AMCL
-	    print "AMCL"
+	    print "composite"
             self.send_bytes(Commands.SET_SPEED_1_OR_BOTH, self.current_cmd.speed1)
             self.send_bytes(Commands.SET_SPEED_2_OR_TURN, self.current_cmd.turn)
 	    
@@ -180,21 +190,23 @@ class MotionControlNode(object):
                     self.send_order(direction)
                 else:
                     print "reverse order"
-                    self.send_order_backtrack(direction)
+                    #self.send_order_backtrack(direction)
+                    self.send_order(4)#stop
 	    elif direction ==1:
                 if self.isRearSensorsOK(15):
                     print "order normal"
                     self.send_order(direction)
                 else:
                     print "reverse order"
-                    self.send_order_backtrack(direction)
+                    #self.send_order_backtrack(direction) 
+                    self.send_order(4)#stop
 	    elif direction == 5: #cas ou on utilise AMCL
                 if self.isFrontSensorsOK(15):
                     print "order normal"
-                    self.send_order(5)#ordrec omposite pour AMCL (et tablette ?)
+                    self.send_order(5)#ordre composite pour AMCL (et tablette ?)
                 else:
                     print "reverse order"
-                    self.send_order_order(4) #on attends 
+                    self.send_order(4) #on attends 
 
             else:
                 self.send_order(direction)

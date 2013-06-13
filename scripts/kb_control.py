@@ -31,7 +31,7 @@ class KeyboardNode(object):
                         "s": 4}
         if key in directions.keys():
             print("%s" % key)
-            self.pub.publish(Command(directions[key]))
+            self.pub.publish(Command(directions[key],0.0,0.0))
 
 
 if __name__ == '__main__':
