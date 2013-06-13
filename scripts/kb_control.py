@@ -4,6 +4,7 @@ import roslib
 roslib.load_manifest('robair_demo')
 
 import rospy
+import os
 
 from robair_demo.msg import Command
 from robair_demo import keylogger
@@ -32,7 +33,12 @@ class KeyboardNode(object):
         if key in directions.keys():
             print("%s" % key)
             self.pub.publish(Command(directions[key],0.0,0.0))
-
+        if key == "c":
+            rospy.loginfo("Current goal cancelled")
+            os.system("rostopic pub -1 move_base/cancel actionlib_msgs/GoalID '{}' &") #Ugly but works
+        if key == "p":
+            rospy.loginfo("Playing presentation")
+            os.system("rosrun sound_play play.py ~/ros_workspace/robair_demo/voix/pres.wav &")
 
 if __name__ == '__main__':
     keyboard_node = KeyboardNode()
