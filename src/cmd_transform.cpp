@@ -22,8 +22,8 @@ void calculCommand(const geometry_msgs::Twist::ConstPtr& msg)
 
    double vt = msg->angular.z;  //max 1 rad/sec
 
-   speed1 = 128 + COEF_SPEED * vx ;
-   turn = COEF_TURN * vt + 128;
+   speed1 = 128 - COEF_SPEED * vx ;
+   turn =  128 - COEF_TURN * vt;
 
 
    ROS_INFO("speed1 = %d, turn = %d", speed1, turn);

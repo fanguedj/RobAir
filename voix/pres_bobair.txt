@@ -1,0 +1,1 @@
+Bonjour, mon nom est rob'AIR. Je suis un robot de téléprésence. J'ai été construit et programmé par des étudiants de polytèque Grenoble, et de Grenoble I N P, N simag. Grâce à moi, des personnes handicapées pourront entre autre visiter un musé en restant chez eux.
