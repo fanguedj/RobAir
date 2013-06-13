@@ -201,9 +201,15 @@ class MotionControlNode(object):
                     #self.send_order_backtrack(direction) 
                     self.send_order(4)#stop
 	    elif direction == 5: #cas ou on utilise AMCL
-                if self.isFrontSensorsOK(15):
+                if self.current_cmd.speed1 == 128 :
                     print "order normal"
-                    self.send_order(5)#ordre composite pour AMCL (et tablette ?)
+                    self.send_order(5) #on a toujours le droit de tourner
+                elif self.isFrontSensorsOK(15) && self.current_cmd.speed1 < 128:  #en avant
+                    print "order normal"
+                    self.send_order(5)
+                elif self.isReartSensorsOK(15) && self.current_cmd.speed1 > 128:  #en arrière
+                    print "order normal"
+                    self.send_order(5)
                 else:
                     print "reverse order"
                     self.send_order(4) #on attends 
