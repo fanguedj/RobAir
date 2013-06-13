@@ -1,4 +1,4 @@
-<html lang="fr">
+<html>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -44,7 +44,7 @@
   </head>
 
   <body onresize="window.location.reload();" onload="main();">
-
+<script type="text/javascript" charset="utf-8" src="/static/js/websockets1.js"></script>
     <div id="countdown"></div>
     
     <script type="text/javascript" language="javascript">
@@ -53,6 +53,7 @@
       document.onmousemove = position;
     </script>
 
+    <div id="container"></div>
     <div id="info">
       <span id="result"></span>
     </div>
@@ -90,9 +91,6 @@
       </div>
     </block>
 
-    <!------------------------------------------------------------------------->
-    <!--<MAP>-->
-    <!------------------------------------------------------------------------->
     <block id="map">
       <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -114,18 +112,24 @@
 	  
 	  var previousOnload = window.onload;
 	  window.onload = function () { if(previousOnload) previousOnload(); load(); }
+
+	  function onclick_map(event) {
+	  var x = event.clientX;
+	  var y = event.clientY;
+	  goThere(x, y);
+	  }
 	</script>
 	
       </head>
 
       <body>
-	<img id="robair" src="/static/images/ensimag3.pgm.jpg" width="300" height="300" alt="localisation" />
+	<img id="robair" src="/static/images/ensimag3.pgm.jpg" width="300" height="300" alt="localisation" onClick="onclick_map(event)"/>
       </body>
     </block>
 
-    <img src="/static/images/qr_code_air.jpg" alt="Logo AIR" />
+    <img style="position:fixed; top:1%; left:1%;" src="/static/images/qr_code_air.jpg" alt="Logo AIR" />
 
-    <img style="position:fixed; bottom:1%; right:1%;" id="video" src="http://127.0.01:8080/stream?topic=/gscam/image_raw">
+    <img style="position:fixed; bottom:1%; right:1%;" id="video" src="http://127.0.01:8080/stream?topic=/gscam/image_raw" />
     
   </body>
 </html>
