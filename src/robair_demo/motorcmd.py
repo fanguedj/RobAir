@@ -146,8 +146,8 @@ class MotionControlNode(object):
             self.send_bytes(Commands.SET_SPEED_2_OR_TURN, Speeds.NONE)
 	elif order == 5: #commande AMCL
 	    print "composite"
-            self.send_bytes(Commands.SET_SPEED_1_OR_BOTH, self.current_cmd.speed1)
-            self.send_bytes(Commands.SET_SPEED_2_OR_TURN, self.current_cmd.turn)
+            self.send_bytes(Commands.SET_SPEED_1_OR_BOTH, chr(self.current_cmd.speed1))
+            self.send_bytes(Commands.SET_SPEED_2_OR_TURN, chr(self.current_cmd.turn))
 	    
             
     def send_order_backtrack(self, order):
