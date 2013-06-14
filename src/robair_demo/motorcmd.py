@@ -162,8 +162,7 @@ class MotionControlNode(object):
         self.stop_wheels() # Cancel previous commands
 
     def isFrontSensorsOK(self, value):
-        if (not self.potholes.front_left) and
-                                (not self.potholes.front_right) and (
+        if (not self.potholes.front_left) and (not self.potholes.front_right) and (
 			        self.obstacles.north_west  >= value and
 			        self.obstacles.north_left  >= value and
 			        self.obstacles.north_right >= value and
@@ -173,8 +172,7 @@ class MotionControlNode(object):
             return False
 
     def isRearSensorsOK(self, value):
-        if (not self.potholes.rear_right) and 
-                                (not self.potholes.rear_left) and (
+        if (not self.potholes.rear_right) and (not self.potholes.rear_left) and (
 			        self.obstacles.south_west  >= value and
 			        self.obstacles.south_left  >= value and
 			        self.obstacles.south_right >= value and
@@ -206,10 +204,10 @@ class MotionControlNode(object):
                 if self.current_cmd.speed1 == 128 :
                     print "order normal"
                     self.send_order(5) #on a toujours le droit de tourner
-                elif self.isFrontSensorsOK(15) && self.current_cmd.speed1 < 128:  #en avant
+                elif self.isFrontSensorsOK(15) and self.current_cmd.speed1 < 128:  #en avant
                     print "order normal"
                     self.send_order(5)
-                elif self.isReartSensorsOK(15) && self.current_cmd.speed1 > 128:  #en arrière
+                elif self.isRearSensorsOK(15) and self.current_cmd.speed1 > 128:  #en arriere
                     print "order normal"
                     self.send_order(5)
                 else:
