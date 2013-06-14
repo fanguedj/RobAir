@@ -13,6 +13,7 @@ from flask import Flask, request, render_template,session, redirect
 
 from robair_demo.msg import Command
 from geometry_msgs.msg import Pose
+from geometry_msgs.msg import Point
 
 
 class TabletNode(threading.Thread):
@@ -33,11 +34,15 @@ class TabletNode(threading.Thread):
                           "s": 4}
             if key in directions.keys():
                 print("%s" % key)
-                self.pub.publish(Command(directions[key]))    
+                self.pub.publish(Command(directions[key],0.0,0.0))    
             if "pos" in key:
                 val = key.split("_")
                 print("position d'arrivee : %s" % key)
                 p = Pose()
+                new_position = Point()
+                new_position.x = float(val[1])
+                new_position.y = float(val[2])
+                p.position = new_position
                 self.pubPos.publish(p)
 
 

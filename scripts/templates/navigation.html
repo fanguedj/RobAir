@@ -116,7 +116,11 @@
 	  function onclick_map(event) {
 	  var x = event.clientX;
 	  var y = event.clientY;
-	  goThere(x, y);
+	  var dx_yaml = -152.4
+	  var dy_yaml = -46.8
+	  var x_inter = x-10+dx_yaml
+	  var y_inter = 630-y+dy_yaml
+	  goThere(x_inter*50/300, y_inter*50/300);
 	  }
 	</script>
 	
