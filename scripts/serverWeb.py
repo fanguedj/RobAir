@@ -37,7 +37,8 @@ class TabletNode(threading.Thread):
             if "pos" in key:
                 val = key.split("_")
                 print("position d'arrivee : %s" % key)
-                self.pubPos.publish(Pose((0.0, 0.0, 0.0), (0.0, 0.0, 0.0, 0.0)))
+                p = Pose()
+                self.pubPos.publish(p)
 
 
 tablet_node = TabletNode()
