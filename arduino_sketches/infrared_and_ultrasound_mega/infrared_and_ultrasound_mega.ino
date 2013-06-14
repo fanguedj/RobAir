@@ -21,6 +21,7 @@ unsigned long pingTimer[SONAR_NUM]; // Holds the times when the next ping should
 unsigned int cm[SONAR_NUM];         // Where the ping distances are stored.
 uint8_t currentUltrasoundSensor = 0;          // Keeps track of which sensor is active.
 unsigned long infraredTimer;
+int alarme = 0;
 
 NewPing sonar[SONAR_NUM] = {     // Ultrasonic Sensor object array. Each sensor's trigger pin, echo pin, and max distance to ping.
 //each sensor localisation si done from the kinect Point of view
@@ -82,10 +83,12 @@ void setup() {
     pingTimer[0] = millis() + 75;           // First ping starts at 75ms, gives time for the Arduino to chill before starting.
     for (uint8_t i = 1; i < SONAR_NUM; i++) // Set the starting time for each sensor.
       pingTimer[i] = pingTimer[i - 1] + PING_INTERVAL;
-    pinMode(13,OUTPUT);
+    pinMode(13,OUTPUT); //led debug connection 
     digitalWrite(13,LOW);
     while(Serial.available()==0){}
     digitalWrite(13,HIGH);
+    pinMode(22,OUTPUT);
+    digitalWrite(22,LOW);
 }
 
 void loop() {
@@ -100,6 +103,18 @@ void loop() {
           Serial.print(" ");
       }
       Serial.println();
+    }
+    alarme = 0;
+    for (int i=0; i< INFRA_NB; ++i ){
+      alarme = alarme + infraredRead(INFRA_PINS[i]);
+    }
+    if (alarme > 0)
+    {
+      digitalWrite(22,HIGH); //allumer la sirène
+    }
+    else
+    {
+      digitalWrite(22,LOW); //éteindre la sirène
     }
     
     // Utlrasound
