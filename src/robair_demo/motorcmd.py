@@ -162,7 +162,8 @@ class MotionControlNode(object):
         self.stop_wheels() # Cancel previous commands
 
     def isFrontSensorsOK(self, value):
-        if not self.potholes.hole and (
+        if (not self.potholes.front_left) and
+                                (not self.potholes.front_right) and (
 			        self.obstacles.north_west  >= value and
 			        self.obstacles.north_left  >= value and
 			        self.obstacles.north_right >= value and
@@ -172,7 +173,8 @@ class MotionControlNode(object):
             return False
 
     def isRearSensorsOK(self, value):
-        if not self.potholes.hole and (
+        if (not self.potholes.rear_right) and 
+                                (not self.potholes.rear_left) and (
 			        self.obstacles.south_west  >= value and
 			        self.obstacles.south_left  >= value and
 			        self.obstacles.south_right >= value and
