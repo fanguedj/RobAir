@@ -1,0 +1,8 @@
+<launch>
+
+  <include file="$(find robair_demo)/launch/pilotageClavier.launch" />
+  <include file="$(find robair_demo)/launch/interfaceTablet.launch" />
+  <!-- node to transform cmd_vel to cmd -->
+  <node pkg="robair_demo" type="cmd_transform" name="cmd_transform"/>
+
+</launch>
