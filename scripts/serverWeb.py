@@ -26,24 +26,30 @@ class TabletNode(threading.Thread):
 
 
     def key_pressed(self, key):
-	if (not rospy.is_shutdown()):
+        if (not rospy.is_shutdown()):
             directions = {"top": 0,
                           "bottom": 1,
                           "left": 2,
                           "right": 3,
                           "s": 4}
-            if key in directions.keys():
-                print("%s" % key)
-                self.pub.publish(Command(directions[key],0.0,0.0))    
-            if "pos" in key:
-                val = key.split("_")
-                print("position d'arrivee : %s" % key)
-                p = Pose()
-                new_position = Point()
-                new_position.x = float(val[1])
-                new_position.y = float(val[2])
-                p.position = new_position
-                self.pubPos.publish(p)
+        if key in directions.keys():
+            print("%s" % key)
+            self.pub.publish(Command(directions[key],0.0,0.0))    
+        if "st" in key:
+            val = key.split("_")
+            print("commande : %s" % key)
+            speed = float(val[1])
+            turn = float(val[2])
+            self.pub.publish(Command(5,speed,turn))
+        if "pos" in key:
+            val = key.split("_")
+            print("position d'arrivee : %s" % key)
+            p = Pose()
+            new_position = Point()
+            new_position.x = float(val[1])
+            new_position.y = float(val[2])
+            p.position = new_position
+            self.pubPos.publish(p)
 
 
 tablet_node = TabletNode()
