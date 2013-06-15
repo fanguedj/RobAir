@@ -1,0 +1,7 @@
+<launch>
+
+  <!-- node to transform cmd_vel to cmd -->
+  <node pkg="robair_demo" type="robair_print_pic.py" name="robair_print_pic" args="$(find robair_demo)/scripts/static/images/photo.jpg"/>
+
+
+</launch>

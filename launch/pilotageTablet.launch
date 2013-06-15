@@ -1,0 +1,6 @@
+<launch>
+
+  <include file="$(find robair_demo)/launch/pilotageClavier.launch" />
+  <include file="$(find robair_demo)/launch/interfaceTablet.launch" />
+
+</launch>

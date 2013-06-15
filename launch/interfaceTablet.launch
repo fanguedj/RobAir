@@ -1,0 +1,9 @@
+<launch>
+
+  <!--Permet de lancer le server web et la webcam-->
+  <node pkg="robair_demo" type="videoConfig.sh" name="videoConfig"/>
+  <node pkg="robair_demo" type="serverWeb.py" name="serverWeb"/>
+  <node pkg="gscam" type="gscam" name="gscam"/>
+  <node pkg="mjpeg_server" type="mjpeg_server" name="mjpeg_server"/>
+
+</launch>

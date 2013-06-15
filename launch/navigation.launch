@@ -5,32 +5,20 @@
   <include file="$(find robair_demo)/launch/pilotageClavier.launch" />
   <include file="$(find robair_demo)/launch/odometry.launch" />
 
-  <node pkg="tf" type="static_transform_publisher" name="base_frame_to_laser_broadcaster" args="0 0 0 0 0 0 base_frame laser 100"/>
-
-  <node pkg="tf" type="static_transform_publisher" name="base_link_to_base_frame" args="0 0 0 0 0 0 base_link base_frame 100"/>
-  
+  <include file="$(find robair_demo)/launch/tfTransform.launch" />
 
   <!--Chargement de la map-->
-  <node pkg="map_server" type="map_server" name="map_server" args="$(find robair_demo)/maps/ensimag3_new.yaml"/>
-
+  <include file="$(find robair_demo)/launch/mapLoading.launch" />
+  
   <!-- AMCL -->
-  <node pkg="amcl" type="amcl" name="amcl">
-    <param name="odom_model_type" value="diff"/>
-    <param name="odom_frame_id" value="odom"/>
-    <param name="base_frame_id" value="base_link"/>
-    <param name="global_frame_id" value="map"/>
-    <param name="first_map_only" value="true"/><!--default : false-->
-    <param name="use_map_topic" value="false"/><!--default : false-->
-  </node>
+  <include file="$(find robair_demo)/launch/amcl.launch" />
 
-  <!-- move base -->
-  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
-    <rosparam file="$(find robair_demo)/param/costmap_common_params.yaml" command="load" ns="global_costmap" />
-    <rosparam file="$(find robair_demo)/param/costmap_common_params.yaml" command="load" ns="local_costmap" />
-    <rosparam file="$(find robair_demo)/param/local_costmap_params.yaml" command="load" />
-    <rosparam file="$(find robair_demo)/param/global_costmap_params.yaml" command="load" />
-    <rosparam file="$(find robair_demo)/param/base_local_planner_params.yaml" command="load" />
-  </node>
+
+  <!-- move base --> 
+  <include file="$(find robair_demo)/launch/moveBase.launch" />
+
+  <!-- node to transform cmd_vel to cmd -->
+  <node pkg="robair_demo" type="cmd_transform" name="cmd_transform"/>
 
 
   <node pkg="rviz" type="rviz" name="rviz" 
