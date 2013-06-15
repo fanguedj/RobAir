@@ -3,4 +3,6 @@
   <include file="$(find robair_demo)/launch/pilotageClavier.launch" />
   <include file="$(find robair_demo)/launch/interfaceTablet.launch" />
 
+  <node pkg="robair_demo" type="poseDisplayTablet.py" name="poseDisplayTablet" />
+
 </launch>

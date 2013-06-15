@@ -5,5 +5,7 @@
   <include file="$(find robair_demo)/launch/sound_play_node.launch" />
   <include file="$(find robair_demo)/launch/imageViewer.launch" />
 
+  <node pkg="robair_demo" type="poseDisplayTablet.py" name="poseDisplayTablet" />
+
 </launch>
 
