@@ -82,8 +82,8 @@ def api():
 if __name__ == '__main__':
     ip = os.popen("bash ~/ros_workspace/robair_demo/utils/getLocalIP.sh", "r").read()
     ip=ip.replace('\n','')
-    #address = ip, 4243
-    address = "127.0.0.1", 4243
+    address = ip, 4243
+    #address = "127.0.0.1", 4243
     http_server = WSGIServer(address, app, handler_class=WebSocketHandler)
     rospy.loginfo("%s running..." % tablet_node.node_name)
     print("Server running on http://%s:%d. Ctrl+C to quit" % address)

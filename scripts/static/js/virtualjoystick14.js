@@ -127,6 +127,7 @@ VirtualJoystick.prototype.getOrder_turn = function() {
     if (this._pressed === false)
 	return 128;
     var deltaX = this.deltaX();
+    deltaX=deltaX/3;
     if (deltaX>20) //20=maxturn
 	deltaX=20;
     if (deltaX<-20)
@@ -138,10 +139,10 @@ VirtualJoystick.prototype.getOrder_speed = function() {
     if (this._pressed === false)
 	return 128;
     var deltaY = this.deltaY();
-    if (deltaY>20) //20=maxspeed
-	deltaY=20;
-    if (deltaY<-20)
-	deltaY=-20;
+    if (deltaY>30) //30=maxspeed
+	deltaY=30;
+    if (deltaY<-30)
+	deltaY=-30;
     return 128 + deltaY;
 }
 
