@@ -70,14 +70,17 @@
       var outputEl = document.getElementById('result');
       //outputEl.innerHTML = '<b>Result:</b> ' + ' dx:' + joystick.deltaX() + ' dy:' + joystick.deltaY() + (joystick.right() ? ' right' : '') + (joystick.up() ? ' up' : '') + (joystick.left() ? ' left' : '') + (joystick.down() ? ' down' : '');
       //directions commands.
-      if (joystick.up()) {
+      /*if (joystick.up()) {
       goTop();
       } else if (joystick.down()) {
       goBack();
       } else if (joystick.right()) {
       goRight();
       } else if (joystick.left())
-      goLeft();
+      goLeft();*/
+      speed = joystick.getOrder_speed();
+      turn = joystick.getOrder_turn();
+      sendOrder(speed, turn);
       }, 1 / 30 * 1000);
     </script>
     
@@ -133,7 +136,7 @@
 
     <img style="position:fixed; top:1%; left:1%;" src="/static/images/qr_code_air.jpg" alt="Logo AIR" />
 
-    <img style="position:fixed; bottom:1%; right:1%;" id="video" src="http://127.0.01:8080/stream?topic=/gscam/image_raw" />
+    <img style="position:fixed; bottom:1%; right:1%;" id="video" src="http://192.168.43.200:8080/stream?topic=/gscam/image_raw" />
     
   </body>
 </html>

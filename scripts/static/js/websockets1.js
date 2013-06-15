@@ -48,6 +48,13 @@ function stopMove() {
 function goThere(x, y) {
     var x_string = x.toString();
     var y_string = y.toString();
-    ws.send("pos" + "_" + x_string + "_" + y_string);
+    ws.send("pos_" + x_string + "_" + y_string);
+    return true;
+}
+
+function sendOrder(speed, turn) {
+    var speed_str = speed.toString();
+    var turn_str = turn.toString();
+    ws.send("st_" + speed_str + "_" + turn_str);
     return true;
 }

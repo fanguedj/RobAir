@@ -1,6 +1,6 @@
 <launch>
 
-  <include file="$(find robair_demo)/launch/pilotageClavier.launch" />
+  <!--include file="$(find robair_demo)/launch/pilotageClavier.launch" /-->
   
   <!--Permet de lancer le server web et la webcam-->
   <node pkg="robair_demo" type="serverWeb.py" name="serverWeb"/>
