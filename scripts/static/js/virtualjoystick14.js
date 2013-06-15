@@ -163,7 +163,7 @@ VirtualJoystick.prototype._onUp = function() {
 VirtualJoystick.prototype._onDown = function(x, y) {
     var larg = (document.body.clientWidth);
     var haut = (document.body.clientHeight);
-    if (x < larg * 0.25 && y > haut * 0.25 && y < haut * 0.5) {
+    if (x > 320 && x < 620 && y > 30 && y < 330) {
 	this._pressed = true;
 	this._baseX = x;
 	this._baseY = y;
@@ -275,9 +275,8 @@ VirtualJoystick.prototype._buildZone = function() {
     var ctx = canvas.getContext('2d');
     ctx.beginPath();
     ctx.fillStyle = "#CCCC99";
-    ctx.fillRect(0, haut * 0.25, larg * 0.2, haut * 0.25);
+    ctx.fillRect(320, 30, 300, 300);
     ctx.lineWidth = 0;
-    ctx.arc(larg*0.19, haut * 0.375, haut*0.125 , 0, Math.PI * 2, true);
     ctx.fill();
     //ctx.stroke();
     return canvas;
