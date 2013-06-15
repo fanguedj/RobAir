@@ -6,4 +6,6 @@
   <!--node pkg="gscam" type="gscam" name="gscam"/-->
   <node pkg="mjpeg_server" type="mjpeg_server" name="mjpeg_server"/>
 
+  <node pkg="robair_demo" type="tabletGoalToNavi" name="tabletGoalToNavi"/>
+
 </launch>
