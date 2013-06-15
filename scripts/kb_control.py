@@ -39,6 +39,12 @@ class KeyboardNode(object):
         if key == "p":
             rospy.loginfo("Playing presentation")
             os.system("rosrun sound_play play.py ~/ros_workspace/robair_demo/voix/pres.wav &")
+        if key == "o":
+            os.system("rosrun sound_play play.py ~/ros_workspace/robair_demo/voix/exterminate.wav &")
+        if key == "i":
+            os.system("rosrun sound_play play.py ~/ros_workspace/robair_demo/voix/pardon.wav &")
+        if key == "u":
+            os.system("rosrun sound_play play.py ~/ros_workspace/robair_demo/voix/merci.wav &")
 
 if __name__ == '__main__':
     keyboard_node = KeyboardNode()
