@@ -1,0 +1,9 @@
+<launch>
+
+  <include file="$(find robair_demo)/launch/navigation.launch" />
+  <include file="$(find robair_demo)/launch/interfaceTablet.launch" />
+  <include file="$(find robair_demo)/launch/sound_play_node.launch" />
+  <include file="$(find robair_demo)/launch/imageViewer.launch" />
+
+</launch>
+

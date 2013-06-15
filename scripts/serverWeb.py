@@ -2,6 +2,7 @@
 
 import datetime
 import threading
+import os
 
 import roslib
 roslib.load_manifest('robair_demo')
@@ -73,6 +74,9 @@ def api():
     return
 
 if __name__ == '__main__':
+    ip = os.popen("bash ~/ros_workspace/robair_demo/utils/getLocalIP.sh", "r").read()
+    ip=ip.replace('\n','')
+    #address = ip, 4243
     address = "127.0.0.1", 4243
     http_server = WSGIServer(address, app, handler_class=WebSocketHandler)
     rospy.loginfo("%s running..." % tablet_node.node_name)
