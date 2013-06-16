@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import roslib; roslib.load_manifest('robair_demo')
 import rospy
+import os
 from geometry_msgs.msg import PoseWithCovarianceStamped
 from geometry_msgs.msg import PoseStamped
 from actionlib_msgs.msg import GoalID
@@ -9,7 +10,7 @@ from PIL import Image
 
 res=0.05
 sizeM = 1000*res
-mapPGM="/home/jeremy/ros_workspace/robair_demo/maps/ensimag3_new.pgm"
+mapPGM="/home/fablab/ros_workspace/robair_demo/maps/ensimag3_new.pgm"
 mapJPG=mapPGM+".jpg"
 mapJPGori=mapPGM+"_ori.jpg"
 xyaml = -25.4
@@ -57,6 +58,8 @@ def updateIMG():
     if not cancel:
         drawCircle(i,xGoal,yGoal,rayonPx,colorGoal)
     i.save(mapJPG)
+    os.system("mv "+mapJPG+" /home/fablab/ros_workspace/robair_demo/scripts/static/images/")
+    
 
 def newPose(data):
     rospy.loginfo(rospy.get_name() + ": I heard a amcl pose")
