@@ -1,6 +1,7 @@
 #include "ros/ros.h"
 #include <geometry_msgs/Pose.h>
 #include <geometry_msgs/PoseStamped.h>
+#include <tf/transform_broadcaster.h>
 #include <math.h> 
 #include <stdint.h>
 
@@ -15,6 +16,7 @@ void calculGoal(const geometry_msgs::Pose::ConstPtr& msg)
 
    geometry_msgs::PoseStamped p;
    p.pose = *msg;
+   p.pose.orientation = tf::createQuaternionMsgFromYaw(0.0);
    p.header.stamp = ros::Time::now();
    p.header.frame_id = "map";
 
