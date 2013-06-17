@@ -123,16 +123,25 @@ VirtualJoystick.prototype.left = function() {
 /////////////////////////////////////
 /////////////////////////////////////
 
+var stop_turn = false;
+var stop_speed = false;
+
 VirtualJoystick.prototype.getOrder_turn = function() {
-    if (this._pressed === false)
-	return 128;
-    var deltaX = this.deltaX();
-    deltaX=deltaX/3;
-    if (deltaX>20) //20=maxturn
-	deltaX=20;
-    if (deltaX<-20)
-	deltaX=-20;
-    return 128 - deltaX;
+    if ((this._pressed === false)&&(!stop_turn)) {
+        stop_turn = true;
+	    return 128;
+	} else {
+        if (this._pressed) {
+            var deltaX = this.deltaX();
+            deltaX=deltaX/3;
+            if (deltaX>20) //20=maxturn
+                deltaX=20;
+            if (deltaX<-20)
+	            deltaX=-20;
+	        stop_turn = false;
+            return 128 - deltaX;
+        }
+    }
 }
 
 VirtualJoystick.prototype.getOrder_speed = function() {
