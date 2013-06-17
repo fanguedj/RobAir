@@ -179,3 +179,9 @@ body {
     top		: 30px;
     left	: 10px;
 }
+
+#parole{
+    position	: fixed;
+    top		: 340px;
+    left	: 10px;
+}

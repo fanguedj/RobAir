@@ -41,7 +41,7 @@
   </head>
 
   <body onresize="window.location.reload();" onload="main();">
-<script type="text/javascript" charset="utf-8" src="/static/js/websockets1.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/static/js/websockets1.js"></script>
     
     <script type="text/javascript" language="javascript">
       if (navigator.appName.substring(0, 3) == "Net")
@@ -68,51 +68,59 @@
 
     <block id="map">
 
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>Localisation</title>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Localisation</title>
+      
+      <script type="text/javascript">
+	/*	  var url = '';
 	
-	<script type="text/javascript">
-/*	  var url = '';
-	  
-	  function load() {
-	  url = document.getElementById('robair').src;
-	  setInterval('refresh_img()', 1000);
-	  }
-	  
-	  function refresh_img() {
-	  var ndate = new Date();
-	  var nocache = ndate.getTime();
-	  document.getElementById('robair').src = url + '?' + nocache;
-	  }
-	  
-	  var previousOnload = window.onload;
-	  window.onload = function () { if(previousOnload) previousOnload(); load(); }
-*/
+	function load() {
+	url = document.getElementById('robair').src;
+	setInterval('refresh_img()', 1000);
+	}
+	
+	function refresh_img() {
+	var ndate = new Date();
+	var nocache = ndate.getTime();
+	document.getElementById('robair').src = url + '?' + nocache;
+	}
+	
+	var previousOnload = window.onload;
+	window.onload = function () { if(previousOnload) previousOnload(); load(); }
+	*/
 
-	  function refreshIt(element) {
-                setTimeout(function() {
-                    element.src = element.src.split('?')[0] + '?' + new Date().getTime();
-                    refreshIt(element);
-                }, 1000); // refresh every 50ms
-            }
+	function refreshIt(element) {
+        setTimeout(function() {
+        element.src = element.src.split('?')[0] + '?' + new Date().getTime();
+        refreshIt(element);
+        }, 1000); // refresh every 1s
+        }
 
-	  function onclick_map(event) {
-	  var x = event.clientX;
-	  var y = event.clientY;
-	  var dx_yaml = -152.4
-	  var dy_yaml = -46.8
-	  var x_inter = x-10+dx_yaml
-	  var y_inter = 330-y+dy_yaml
-	  goThere(x_inter*50/300, y_inter*50/300);
-	  }
-	</script>
-<body>
+	function onclick_map(event) {
+	var x = event.clientX;
+	var y = event.clientY;
+	var dx_yaml = -152.4
+	var dy_yaml = -46.8
+	var x_inter = x-10+dx_yaml
+	var y_inter = 330-y+dy_yaml
+	goThere(x_inter*50/300, y_inter*50/300);
+	}
+      </script>
+      <body>
 
 	<img id="robair" src="/static/images/ensimag3_new.pgm.jpg" width="300" height="300" alt="localisation" onload="refreshIt(this)" onClick="onclick_map(event)"/>
-</body>
+      </body>
     </block>
 
     <img style="position:fixed; top:30px; left:630px;" id="video" src="http://192.168.43.249:8080/stream?topic=/gscam/image_raw" />
+    
+    <block id="parole">
+        <input type="button" value="Bonjour" onclick="say('say_bonjour')">
+        <input type="button" value="Pardon" onclick="say('say_pardon')">
+        <input type="button" value="Merci" onclick="say('say_merci')">
+        <input type="button" value="Exterminate !!" onclick="say('say_exterminate')">
+        <input type="button" value="Cancel" onclick="cancel()">
+    </block>
     
   </body>
 </html>

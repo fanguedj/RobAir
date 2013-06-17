@@ -4,7 +4,7 @@
 #include <math.h> 
 #include <stdint.h>
 
-#define COEF_TURN 28   //==28 (unité moteur)/1(rad/s)
+#define COEF_TURN 100   //==28 (unité moteur)/1(rad/s)
 #define COEF_SPEED 160 // ==48(unités moteur)/0.3(m/s)
 
 

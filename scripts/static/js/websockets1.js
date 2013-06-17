@@ -18,6 +18,7 @@ $(document).ready(function() {
     }
 });
 
+//Depracated
 //Sending methods for directions.
 function goTop() {
     ws.send("top")
@@ -52,9 +53,23 @@ function goThere(x, y) {
     return true;
 }
 
+//Methode d'envoie d'un ordre du joystick
 function sendOrder(speed, turn) {
     var speed_str = speed.toString();
     var turn_str = turn.toString();
     ws.send("st_" + speed_str + "_" + turn_str);
     return true;
 }
+
+//Methode d'envoie d'une commande de parole
+function say(str) {
+    ws.send(str);
+    return true;
+}
+
+//Methode d'annulation d'une position d'arrivee
+function cancel() {
+    ws.send("cancel");
+    return true;
+}
+

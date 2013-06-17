@@ -31,7 +31,7 @@ class TabletNode(threading.Thread):
             directions = {"top": 0,
                           "bottom": 1,
                           "left": 2,
-                          "right": 3,
+                   	      "right": 3,
                           "s": 4}
         if key in directions.keys():
             print("%s" % key)
@@ -51,7 +51,21 @@ class TabletNode(threading.Thread):
             new_position.y = float(val[2])
             p.position = new_position
             self.pubPos.publish(p)
-
+        if "say" in key:
+            print(key)
+            val = key.split("_")
+            if val[1] == "bonjour":
+                rospy.loginfo("Playing presentation")
+                os.system("rosrun sound_play play.py ~/ros_workspace/robair_demo/voix/pres.wav &")
+            if val[1] == "pardon":
+                os.system("rosrun sound_play play.py ~/ros_workspace/robair_demo/voix/pardon.wav &")
+            if val[1] == "merci":
+                os.system("rosrun sound_play play.py ~/ros_workspace/robair_demo/voix/merci.wav &")
+            if val[1] == "exterminate":
+                os.system("rosrun sound_play play.py ~/ros_workspace/robair_demo/voix/exterminate.wav &")
+        if "cancel" in key:
+            rospy.loginfo("Current goal cancelled")
+            os.system("rostopic pub -1 move_base/cancel actionlib_msgs/GoalID '{}' &")
 
 tablet_node = TabletNode()
 app = Flask(__name__)
