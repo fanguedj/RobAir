@@ -2,6 +2,7 @@ RobAIR ROS nodes for autonomous moving in crowded museum
 =======================================================
 
 This package provides several nodes used to enable the [RobAIR Configuration 2](http://air.imag.fr/mediawiki/index.php/RobAIR_2013_Configuration_2) machine to find its way through a map, while avoiding collision with surrounding people.
+Its the git repository used by Ensimag team (http://fablab.ensimag.fr/index.php/RobAIR/ProjetSpe_Contribution_RobAIR)
 
 Available nodes
 ---------------
@@ -27,8 +28,14 @@ Warning: work in progress.
 *   **Keyboard**    
     Enables simple motor commands using the keyboard.
     
-*   **AutoPilot**    
-    Reads data from ultrasonic proximity sensors, Kinect, and SLAM nodes, plus a destination from a to-be-defined source in order to compute a path towards the destination, and feed the **/cmd** topic with the resulting directions.
+*   **SLAM**
+    There some launch files in the launch directory. Slam algo are Hector SLAM or Gmapping, we recommend to use Gmapping to take advantage of the odometry information of the wheels.
+    Once the map is correct, you can record it, to use it in the navigation program.
+         $ rosrun map_server map_saver -f maps/mymaps
+
+* **Navigation**
+    The navigation program can be run using the run.sh script, which do only a chmod and launch a ros launch file (completNavigation.launch).
+    It launch the navigation stack, AMCL node, "pilotage nodes", and web server.
 
 Node and topics names follow [recommendations from the RICM 5 team](http://air.imag.fr/mediawiki/index.php/RobAIR2013-RICM5-Suivi#Architecture_ROS_d.C3.A9taill.C3.A9e) when possible.
 
@@ -47,12 +54,8 @@ Launching nodes
 
 In a terminal, run `make`.
 Make sure script files are executable with `chmod +x scripts`. 
-You can then use the `./toutLancer.sh` script to automatically open one gnome-terminal per
-command and run all provided nodes.
+You can then use the `./run.sh` script to automatically launch the "navigation program"
+or use launch files in the launch  directory
 
-Alternatively, you can launch individual nodes as follows.     
-* ROSMaster: `roscore`
-* Keyboard node (in a new terminal): `rosrun robair_demo kb_control.py`
-* Motors node (in a new terminal): `rosrun robair_demo motion_control_node.py`
-* Arduino sensors data (in a new terminal): `rosrun robair_demo arduino_sensors.py`
+
     
