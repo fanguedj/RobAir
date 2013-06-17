@@ -35,17 +35,12 @@ Node and topics names follow [recommendations from the RICM 5 team](http://air.i
 TODO
 ----
 
-* Modify the `Command` message type to be higher-level and document it.
-* Modify the MotionControlNode to allow for more flexible movement commands (together with above point).
-* Actually implement the AutoPilot node. Algorithms have already been discussed on
-  [the project's wiki](http://fablab.ensimag.fr/index.php/RobAIR/Pilotage_Automatique/Algorithmes).
+* Improve the AutoPilot node.
 * Make use of the skeleton tracking nodes in the above algortihms, and integrate them in the current framework.
-* Integrate the SLAM nodes from the other Ensimag team.
-* Look into [the RICM5 team source code](https://github.com/SalemHarrache/robair-ros-pkg)
-  for reusable parts and for integration with their remote control architecture.
-  They might indeed provide a node that sends high-level commands to the AutoPilot node
-  (high-level as in "go to room 25" or "let me see the Joconde")
-
+* Improve GUI on the remote tablet
+* Improve the voice node
+* Make use of the reservation plateform [reservation from RCIM5] (http://air.imag.fr/mediawiki/index.php/RobAIR2013-RICM5-Suivi#Portail_de_r.C3.A9servation)
+* Make use of Kinect in addition of LIDAR [transformation from pointcloud to laserscan](http://fablab.ensimag.fr/index.php/RobAIR/SLAM#S.C3.A9ance_du_17.2F04.2F2013)
 
 Launching nodes
 ---------------
