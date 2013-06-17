@@ -64,7 +64,16 @@
       setInterval(function() {
       speed = joystick.getOrder_speed();
       turn = joystick.getOrder_turn();
-      sendOrder(speed, turn);
+      if (speed != 128)||(turn != 128)){
+        joystick.stop_speed = false;
+        joystick.stop_turn = false;
+      }
+      if (!joystick.stop_speed)&&(!joystick.stop_turn))
+        sendOrder(speed, turn);
+      if ((speed == 128)&&(turn == 128)){
+        joystick.stop_speed = true;
+        joystick.stop_turn = true;
+       }
       }, 1 / 30 * 1000);
     </script>
 
